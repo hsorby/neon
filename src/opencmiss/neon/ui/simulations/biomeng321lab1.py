@@ -35,6 +35,7 @@ class Biomeng321Lab1(BaseSimulationView):
         super(Biomeng321Lab1, self).__init__(parent)
         self._ui = Ui_Biomeng321Lab1()
         self._ui.setupUi(shared_gl_widget, self)
+        self._ui.label_13.setText(u'\u2211')
 
         self._zinc_context = None
 
@@ -80,8 +81,11 @@ class Biomeng321Lab1(BaseSimulationView):
         materialmodule.defineStandardMaterials()
         glyphmodule = self._zinc_context.getGlyphmodule()
         glyphmodule.defineStandardGlyphs()
-        # tessellation_module = self._zinc_context.getTessellationmodule()
-        # tessellation_module.readDescription(json.dumps(default_visualisation['Tessellations']))
+        font_module = self._zinc_context.getFontmodule()
+        font = font_module.getDefaultFont()
+        font.setPointSize(22)
+        font.setBold(True)
+        font_module.setDefaultFont(font)
         self.setZincContext(self._zinc_context)
 
         node_filename = self._simulation.getNodeFilename()

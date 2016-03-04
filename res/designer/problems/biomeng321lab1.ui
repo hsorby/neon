@@ -19,37 +19,61 @@
      <property name="title">
       <string>Parameters</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboBoxBoundaryConditions">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <property name="text">
-          <string>Type 1</string>
-         </property>
+         <widget class="QLabel" name="label_17">
+          <property name="text">
+           <string>Boundary conditions:</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <property name="text">
-          <string>Type 2</string>
-         </property>
+         <widget class="QComboBox" name="comboBoxBoundaryConditions">
+          <item>
+           <property name="text">
+            <string>Type 1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Type 2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Type 3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Type 4</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Type 5</string>
+           </property>
+          </item>
+         </widget>
         </item>
         <item>
-         <property name="text">
-          <string>Type 3</string>
-         </property>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
-        <item>
-         <property name="text">
-          <string>Type 4</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Type 5</string>
-         </property>
-        </item>
-       </widget>
+       </layout>
       </item>
-      <item row="1" column="0">
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -61,13 +85,6 @@
          </size>
         </property>
        </spacer>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_17">
-        <property name="text">
-         <string>Boundary conditions:</string>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>
