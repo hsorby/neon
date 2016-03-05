@@ -810,19 +810,6 @@ Function InstallOptionsPage
 FunctionEnd
 
 ;--------------------------------
-; install VC2015 redistributables if required
-Section "-Install Redist"
-  SetOutPath "$INSTDIR"
-  Call CheckVCRedist
-  Pop $R0
-  
-  ${If} $R0 == "NoVSRedist"
-    File "${MSVS2015_DIR}\${REDIST_PACKAGE_NAME}"
-    ExecWait '"${INSTDIR}\${REDIST_PACKAGE_NAME}" /passive /norestart'
-  ${EndIf}
-SectionEnd
-
-;--------------------------------
 ; determine admin versus local install
 Function un.onInit
 
@@ -975,23 +962,6 @@ Section "Uninstall"
   doNotRemoveFromPath:
 SectionEnd
 ; HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{3ee5e5bb-b7cc-4556-8861-a00a82977d6c}
-
-;-------------------------------
-; Test if Visual Studio Redistributables 2015 installed
-; Returns -1 if there is no VC redistributables intstalled
-Function CheckVCRedist
-   Push $R0
-   ClearErrors
-   ReadRegDword $R0 HKLM "SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{3ee5e5bb-b7cc-4556-8861-a00a82977d6c}" "Version"
-
-   ; if VS 2015 redist not installed, install it
-   IfErrors 0 VSRedistInstalled
-   StrCpy $R0 "NoVSRedist"
-
-VSRedistInstalled:
-   Exch $R0 
-FunctionEnd
-
 
 ;--------------------------------
 ; determine admin versus local install
