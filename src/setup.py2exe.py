@@ -48,14 +48,27 @@ def which(name, flags=os.X_OK):
                 result.append(pext)
     return result
 
+additional_dlls = []
 # Assuming that we are using the mkl libraries from intel
 mkl_core = which('mkl_core.dll')
-mkl_avx = which('mkl_avx.dll')
 mkl_def = which('mkl_def.dll')
+mkl_intel_thread = which('mkl_intel_thread.dll')
+additional_dlls.extend([mkl_core, mkl_def, mkl_intel_thread])
 
 # Assuming that we are using mpich2, what test can we perform to confirm this?
+fmpich2 = which('fmpich2.dll')
+libiomp5md = which('libiomp5md.dll')
+mpich2mpi = which('mpich2mpi.dll')
 mpich2nemesis = which('mpich2nemesis.dll')
-additional_dlls = [dll[0] for dll in [mkl_core, mkl_avx, mkl_def, mpich2nemesis] if dll]
+additional_dlls.extend([fmpich2, libiomp5md, mpich2mpi, mpich2nemesis])
+
+# If visual Studio 2015 need UCRTBASE.dll, but not for windows 10?
+ucrtbase = which('ucrtbase.dll')
+msvcp140 = which('msvcp140.dll')
+concrt140 = which('concrt140.dll')
+additional_dlls.extend([ucrtbase, msvcp140, concrt140])
+
+additional_dlls = [dll[0] for dll in additional_dlls if dll]
 
 APP = ['opencmiss/neon/neon.py']
 DATA_FILES = [('bin', [os.path.join('..', 'bin', 'ventilation-' + sys.platform + '.exe')]), 
