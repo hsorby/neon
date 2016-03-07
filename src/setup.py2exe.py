@@ -70,7 +70,8 @@ additional_dlls.extend([ucrtbase, msvcp140, concrt140])
 
 additional_dlls = [dll[0] for dll in additional_dlls if dll]
 
-APP = ['opencmiss/neon/neon.py']
+APP = 'opencmiss/neon/neon.py'
+ICON_RES = [(1, '../res/win/Neon.ico')]
 DATA_FILES = [('bin', [os.path.join('..', 'bin', 'ventilation-' + sys.platform + '.exe')]), 
     (os.path.join('data', 'Ventilation', 'Geom'), [os.path.join('..', 'data', 'Ventilation', 'Geom', 'tree.ipelem'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'tree.ipnode'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'tree.ipfiel')]),
     ('.', additional_dlls),
@@ -82,9 +83,8 @@ OPTIONS = {'py2exe': {
     }
 }
 
-
 setup(
-    windows=['opencmiss/neon/neon.py'],
+    windows=[{'script': APP, 'icon_resources': ICON_RES}],
     options=OPTIONS,
     data_files=DATA_FILES,
 )
