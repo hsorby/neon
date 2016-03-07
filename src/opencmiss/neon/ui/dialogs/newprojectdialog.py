@@ -18,7 +18,7 @@ from PySide import QtCore, QtGui
 from opencmiss.neon.ui.dialogs.ui_newprojectdialog import Ui_NewProjectDialog
 
 
-BIOMENG321 = False
+BIOMENG321 = True
 
 
 class NewProjectDialog(QtGui.QDialog):
@@ -31,6 +31,10 @@ class NewProjectDialog(QtGui.QDialog):
 
         self._ui = Ui_NewProjectDialog()
         self._ui.setupUi(self)
+        self._ui.pushButtonOpen.setVisible(False)
+        self._ui.toolButtonRecent.setVisible(False)
+        if BIOMENG321:
+            self._ui.lineEditFilter.setVisible(False)
 
         self._proxy_model = QtGui.QSortFilterProxyModel()
         self._proxy_model.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)

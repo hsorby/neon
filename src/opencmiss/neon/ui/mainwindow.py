@@ -550,17 +550,17 @@ class MainWindow(QtGui.QMainWindow):
         document = self._model.getDocument()
         if document is None:
             # Create a default Generic project on start up
-            project_model = self._model.getProjectModel()
-            project = project_model.getDefaultProject()
-            if project is not None:
-                self._model.new(project)
-                return
+            # project_model = self._model.getProjectModel()
+            # project = project_model.getDefaultProject()
+            # if project is not None:
+            #     self._model.new(project)
+            #     return
             # Alternative behaviour is to require user to select project type
-            # self._newTriggered()
+            self._newTriggered()
         else:
             project = document.getProject()
-        if project is None:
-            self._newTriggered()
+        # if project is None:
+        #     self._newTriggered()
 
     def _newTriggered(self):
         project_model = self._model.getProjectModel()
