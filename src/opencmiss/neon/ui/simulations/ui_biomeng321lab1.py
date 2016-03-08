@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'res\designer\simulations\biomeng321lab1.ui'
 #
-# Created: Fri Mar 04 15:39:33 2016
-#      by: pyside-uic 0.2.14 running on PySide 1.1.2
+# Created: Tue Mar  8 12:23:11 2016
+#      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -22,12 +22,12 @@ class Ui_Biomeng321Lab1(object):
         self.splitter = QtGui.QSplitter(self.groupBox)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName("splitter")
-        self.widget = QtGui.QWidget(self.splitter)
-        self.widget.setObjectName("widget")
-        self.verticalLayout = QtGui.QVBoxLayout(self.widget)
+        self.layoutWidget = QtGui.QWidget(self.splitter)
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.groupBox_9 = QtGui.QGroupBox(self.widget)
+        self.groupBox_9 = QtGui.QGroupBox(self.layoutWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
@@ -169,7 +169,7 @@ class Ui_Biomeng321Lab1(object):
         self.gridLayout_6.addWidget(self.label_10, 0, 1, 1, 1)
         self.gridLayout_2.addWidget(self.groupBox_5, 1, 1, 1, 1)
         self.verticalLayout.addWidget(self.groupBox_9)
-        self.groupBox_10 = QtGui.QGroupBox(self.widget)
+        self.groupBox_10 = QtGui.QGroupBox(self.layoutWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
@@ -287,7 +287,7 @@ class Ui_Biomeng321Lab1(object):
         self.groupBox_6.setTitle(QtGui.QApplication.translate("Biomeng321Lab1", "Deformation Gradient Tensor", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Biomeng321Lab1", "F", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("Biomeng321Lab1", "=", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("Biomeng321Lab1", "Invariants", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("Biomeng321Lab1", "Invariants of C", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Biomeng321Lab1", "I1:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("Biomeng321Lab1", "I2:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("Biomeng321Lab1", "I3:", None, QtGui.QApplication.UnicodeUTF8))

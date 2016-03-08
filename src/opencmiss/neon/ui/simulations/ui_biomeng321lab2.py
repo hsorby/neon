@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'res\designer\simulations\biomeng321lab2.ui'
 #
-# Created: Fri Mar 04 15:44:21 2016
-#      by: pyside-uic 0.2.14 running on PySide 1.1.2
+# Created: Tue Mar  8 12:23:19 2016
+#      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Biomeng321Lab2(object):
     def setupUi(self, shared_opengl_widget, Biomeng321Lab2):
         Biomeng321Lab2.setObjectName("Biomeng321Lab2")
-        Biomeng321Lab2.resize(855, 812)
+        Biomeng321Lab2.resize(855, 814)
         self.verticalLayout = QtGui.QVBoxLayout(Biomeng321Lab2)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox = QtGui.QGroupBox(Biomeng321Lab2)
@@ -22,12 +22,12 @@ class Ui_Biomeng321Lab2(object):
         self.splitter = QtGui.QSplitter(self.groupBox)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName("splitter")
-        self.widget = QtGui.QWidget(self.splitter)
-        self.widget.setObjectName("widget")
-        self.verticalLayout_2 = QtGui.QVBoxLayout(self.widget)
+        self.layoutWidget = QtGui.QWidget(self.splitter)
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.layoutWidget)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.groupBox_9 = QtGui.QGroupBox(self.widget)
+        self.groupBox_9 = QtGui.QGroupBox(self.layoutWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
@@ -58,6 +58,9 @@ class Ui_Biomeng321Lab2(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
+        self.label_24 = QtGui.QLabel(self.groupBox_6)
+        self.label_24.setObjectName("label_24")
+        self.horizontalLayout.addWidget(self.label_24)
         self.label_2 = QtGui.QLabel(self.groupBox_6)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
@@ -114,6 +117,9 @@ class Ui_Biomeng321Lab2(object):
         self.label_7.setFont(font)
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_2.addWidget(self.label_7)
+        self.label_23 = QtGui.QLabel(self.groupBox_7)
+        self.label_23.setObjectName("label_23")
+        self.horizontalLayout_2.addWidget(self.label_23)
         self.label_8 = QtGui.QLabel(self.groupBox_7)
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_2.addWidget(self.label_8)
@@ -194,7 +200,7 @@ class Ui_Biomeng321Lab2(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         self.gridLayout_2.addWidget(self.groupBox_5, 1, 1, 1, 1)
         self.verticalLayout_2.addWidget(self.groupBox_9)
-        self.groupBox_10 = QtGui.QGroupBox(self.widget)
+        self.groupBox_10 = QtGui.QGroupBox(self.layoutWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
@@ -331,13 +337,15 @@ class Ui_Biomeng321Lab2(object):
         self.groupBox_9.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Strain Analysis", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_6.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Deformation Gradient Tensor", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Biomeng321Lab2", "F", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_24.setText(QtGui.QApplication.translate("Biomeng321Lab2", "(ref)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("Biomeng321Lab2", "=", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Invariants", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Invariants of C(ref)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Biomeng321Lab2", "I1:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("Biomeng321Lab2", "I2:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("Biomeng321Lab2", "I3:", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_7.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Right Cauchy-Green Deformation Tensor", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("Biomeng321Lab2", "C", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_23.setText(QtGui.QApplication.translate("Biomeng321Lab2", "(ref)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("Biomeng321Lab2", "=", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_5.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Green-Lagrange Strain Tensor", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("Biomeng321Lab2", "E", None, QtGui.QApplication.UnicodeUTF8))

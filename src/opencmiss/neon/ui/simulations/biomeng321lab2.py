@@ -44,11 +44,11 @@ class Biomeng321Lab2(BaseSimulationView):
 
     def _createNameUiMap(self):
         map_name_ui = {}
-        map_name_ui['Cauchy stress tensor (fibre coordinate system)'] = self._ui.tableWidgetCauchyStress
-        map_name_ui['Deformation gradient tensor'] = self._ui.tableWidgetDeformationGradient
+        map_name_ui['Cauchy stress tensor (reference coordinate system)'] = self._ui.tableWidgetCauchyStress
+        map_name_ui['Deformation gradient tensor (reference coordinate system)'] = self._ui.tableWidgetDeformationGradient
         map_name_ui['Green-Lagrange strain tensor (reference coordinate system)'] = self._ui.tableWidgetGreenLagrangeStrainReference
         map_name_ui['Green-Lagrange strain tensor (fibre coordinate system)'] = self._ui.tableWidgetGreenLagrangeStrainFibre
-        map_name_ui['Right Cauchy-Green deformation tensor'] = self._ui.tableWidgetRightCauchyGreenDeformation
+        map_name_ui['Right Cauchy-Green deformation tensor (reference coordinate system)'] = self._ui.tableWidgetRightCauchyGreenDeformation
         map_name_ui['Second Piola-Kirchhoff stress tensor (reference coordinate system)'] = self._ui.tableWidgetSecondPiolaKirchoffStressReference
         map_name_ui['Second Piola-Kirchhoff stress tensor (fibre coordinate system)'] = self._ui.tableWidgetSecondPiolaKirchoffStressFibre
 
@@ -56,9 +56,9 @@ class Biomeng321Lab2(BaseSimulationView):
 
     def _displayResults(self, r):
         self._ui.lineEditHydrostaticPressure.setText("{0:.4f}".format(r['Hydrostatic pressure']))
-        self._ui.lineEditInvariant1.setText("{0:.4f}".format(r['Invariants'][0]))
-        self._ui.lineEditInvariant2.setText("{0:.4f}".format(r['Invariants'][1]))
-        self._ui.lineEditInvariant3.setText("{0:.4f}".format(r['Invariants'][2]))
+        self._ui.lineEditInvariant1.setText("{0:.4f}".format(r['Invariants of Cref (reference coordinate system)'][0]))
+        self._ui.lineEditInvariant2.setText("{0:.4f}".format(r['Invariants of Cref (reference coordinate system)'][1]))
+        self._ui.lineEditInvariant3.setText("{0:.4f}".format(r['Invariants of Cref (reference coordinate system)'][2]))
 
         for key in self._map_name_ui:
             a = r[key]

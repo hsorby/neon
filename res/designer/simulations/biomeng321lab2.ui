@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>855</width>
-    <height>812</height>
+    <height>814</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QGroupBox" name="groupBox_9">
@@ -74,6 +74,13 @@
                  </widget>
                 </item>
                 <item>
+                 <widget class="QLabel" name="label_24">
+                  <property name="text">
+                   <string>(ref)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLabel" name="label_2">
                   <property name="text">
                    <string>=</string>
@@ -103,7 +110,7 @@
                 </font>
                </property>
                <property name="title">
-                <string>Invariants</string>
+                <string>Invariants of C(ref)</string>
                </property>
                <layout class="QFormLayout" name="formLayout">
                 <item row="0" column="0">
@@ -163,6 +170,13 @@
                   </property>
                   <property name="text">
                    <string>C</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_23">
+                  <property name="text">
+                   <string>(ref)</string>
                   </property>
                  </widget>
                 </item>
