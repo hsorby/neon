@@ -107,6 +107,7 @@ class Biomeng321Lab1(BaseSimulationView):
         parameters = {}
         parameters['name'] = self._problem.getName()
         bc = self._problem.getBoundaryCondition()
+        self._ui.groupBox.setTitle('Solution of "{0}"'.format(bc))
         parameters['boundary_condition'] = BOUNDARY_CONDITIONS.index(bc) + 1 if bc else 1
 
         self._simulation.setParameters(parameters)
