@@ -40,16 +40,16 @@ default_visualisation = {
     2,
     0
   ],
-  "Project": "{\"problem\": \"{\\\"boundary_condition\\\": \\\"Model 1 (Equibiaxial extension of unit cube, isotropic, 0 degree fibre rotation)\\\"}\", \"identifier\": \"Biomeng321Lab2\"}",
+  "Project": "{\"identifier\": \"Biomeng321Lab2\", \"problem\": \"{\\\"boundary_condition\\\": \\\"Model 1 (Equibiaxial extension of unit cube, isotropic, 0 degree fibre rotation)\\\"}\"}",
   "RootRegion": {
     "Model": {
       "Sources": [
         {
-          "FileName": "c:\\users\\hsor001\\appdata\\local\\temp\\biomeng321_lab2_wn_bgi.exnode",
+          "FileName": "AppData\\Local\\Temp\\biomeng321_lab2_enegfovm.exnode",
           "Type": "FILE"
         },
         {
-          "FileName": "c:\\users\\hsor001\\appdata\\local\\temp\\biomeng321_lab2_wn_bgi.exelem",
+          "FileName": "AppData\\Local\\Temp\\biomeng321_lab2_enegfovm.exelem",
           "Type": "FILE"
         }
       ]
@@ -288,9 +288,9 @@ default_visualisation = {
           "Material": "black",
           "PointAttributes": {
             "BaseSize": [
-              1.2,
-              1.2,
-              1.2
+              1.8,
+              1.8,
+              1.8
             ],
             "Font": "default",
             "Glyph": "axes_xyz",
@@ -341,18 +341,40 @@ default_visualisation = {
           "ElementFaceType": "ALL",
           "Exterior": False,
           "FieldDomainType": "MESH_HIGHEST_DIMENSION",
-          "LineAttributes": {
+          "Material": "gold",
+          "PointAttributes": {
             "BaseSize": [
+              0.2,
+              0.2,
+              0.2
+            ],
+            "Font": "default",
+            "Glyph": "arrow_solid",
+            "GlyphOffset": [
+              0,
+              0,
+              0
+            ],
+            "GlyphRepeatMode": "NONE",
+            "GlyphShapeType": "ARROW_SOLID",
+            "LabelOffset": [
+              0,
+              0,
+              0
+            ],
+            "LabelText": [
+              "",
+              "",
+              ""
+            ],
+            "OrientationScaleField": "Fibre",
+            "ScaleFactors": [
+              0.2,
               0.01,
               0.01
-            ],
-            "ScaleFactors": [
-              1,
-              1
-            ],
-            "ShapeType": "CIRCLE_EXTRUSION"
+            ]
           },
-          "Material": "gold",
+          "Points": {},
           "RenderLineWidth": 1,
           "RenderPointSize": 1,
           "RenderPolygonMode": "RENDER_POLYGON_SHADED",
@@ -367,55 +389,8 @@ default_visualisation = {
           "Scenecoordinatesystem": "LOCAL",
           "SelectMode": "ON",
           "SelectedMaterial": "default_selected",
-          "Streamlines": {
-            "ColourDataType": "FIELD",
-            "StreamVectorField": "Fibre",
-            "TrackDirection": "FORWARD",
-            "TrackLength": 1
-          },
           "Tessellation": "streamlines",
-          "Type": "STREAMLINES",
-          "VisibilityFlag": True
-        },
-        {
-          "CoordinateField": "DeformedGeometry",
-          "ElementFaceType": "ALL",
-          "Exterior": False,
-          "FieldDomainType": "MESH_HIGHEST_DIMENSION",
-          "LineAttributes": {
-            "BaseSize": [
-              0.01,
-              0.01
-            ],
-            "ScaleFactors": [
-              1,
-              1
-            ],
-            "ShapeType": "CIRCLE_EXTRUSION"
-          },
-          "Material": "gold",
-          "RenderLineWidth": 1,
-          "RenderPointSize": 1,
-          "RenderPolygonMode": "RENDER_POLYGON_SHADED",
-          "SamplingAttributes": {
-            "ElementPointSamplingMode": "CELL_CENTRES",
-            "Location": [
-              0,
-              0,
-              0
-            ]
-          },
-          "Scenecoordinatesystem": "LOCAL",
-          "SelectMode": "ON",
-          "SelectedMaterial": "default_selected",
-          "Streamlines": {
-            "ColourDataType": "FIELD",
-            "StreamVectorField": "Fibre",
-            "TrackDirection": "REVERSE",
-            "TrackLength": 1
-          },
-          "Tessellation": "streamlines",
-          "Type": "STREAMLINES",
+          "Type": "POINTS",
           "VisibilityFlag": True
         }
       ],
@@ -430,17 +405,17 @@ default_visualisation = {
       1
     ],
     "EyePosition": [
-      1.363185969378734,
-      3.22676199826145,
-      4.788985480726977
+      2.672504697928276,
+      -3.465987411880798,
+      2.963755212408981
     ],
     "FarClippingPlane": 9.97371765089012,
     "LightingLocalViewer": False,
     "LightingTwoSided": True,
     "LookatPosition": [
-      0.7499999906867743,
-      0.4949999954551458,
-      0.7499999906867743
+      0.9379317239943965,
+      0.4517917742573711,
+      0.5566433911673778
     ],
     "NearClippingPlane": 0.2457230375503514,
     "PerturbLinesFlag": False,
@@ -451,11 +426,11 @@ default_visualisation = {
     "TransparencyMode": "FAST",
     "TumbleRate": 1.5,
     "UpVector": [
-      -0.3796614995075607,
-      0.792036478910918,
-      -0.4780537227824904
+      -0.1451313672210734,
+      0.4705102031322654,
+      0.8703775244094062
     ],
-    "ViewAngle": 0.6981317007976321,
+    "ViewAngle": 0.6981317007975745,
     "ZoomRate": 1
   },
   "Spectrums": {
@@ -516,7 +491,7 @@ default_visualisation = {
         "CircleDivisions": 12,
         "MinimumDivisions": [
           3,
-          3,
+          1,
           1
         ],
         "Name": "streamlines",

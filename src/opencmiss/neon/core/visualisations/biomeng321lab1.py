@@ -39,16 +39,16 @@ default_visualisation = {
     2,
     0
   ],
-  "Project": "{\"problem\": \"{\\\"boundary_condition\\\": \\\"Model 1 (Uniaxial extension of unit cube)\\\"}\"}",
+  "Project": "{\"identifier\": \"Biomeng321Lab1\", \"problem\": \"{\\\"boundary_condition\\\": \\\"Model 1 (Uniaxial extension of unit cube)\\\"}\"}",
   "RootRegion": {
     "Model": {
       "Sources": [
         {
-          "FileName": "../../tmp/biomeng321_lab1_cfoYB4.exnode",
+          "FileName": "AppData\\Local\\Temp\\biomeng321_lab1_a5cop30h.exnode",
           "Type": "FILE"
         },
         {
-          "FileName": "../../tmp/biomeng321_lab1_cfoYB4.exelem",
+          "FileName": "AppData\\Local\\Temp\\biomeng321_lab1_a5cop30h.exelem",
           "Type": "FILE"
         }
       ]
@@ -287,9 +287,9 @@ default_visualisation = {
           "Material": "black",
           "PointAttributes": {
             "BaseSize": [
-              1.2,
-              1.2,
-              1.2
+              1.8,
+              1.8,
+              1.8
             ],
             "Font": "default",
             "Glyph": "axes_xyz",
@@ -339,6 +339,42 @@ default_visualisation = {
       "VisibilityFlag": True
     }
   },
+  "Sceneviewer": {
+    "AntialiasSampling": 0,
+    "BackgroundColourRGB": [
+      1,
+      1,
+      1
+    ],
+    "EyePosition": [
+      2.13100693234562,
+      -3.931815426970709,
+      2.377282853637422
+    ],
+    "FarClippingPlane": 9.97371765089012,
+    "LightingLocalViewer": False,
+    "LightingTwoSided": True,
+    "LookatPosition": [
+      0.7499999906867743,
+      0.4949999954551458,
+      0.7499999906867743
+    ],
+    "NearClippingPlane": 0.2457230375503514,
+    "PerturbLinesFlag": False,
+    "ProjectionMode": "PARALLEL",
+    "Scene": "/",
+    "Scenefilter": "default",
+    "TranslationRate": 1,
+    "TransparencyMode": "FAST",
+    "TumbleRate": 1.5,
+    "UpVector": [
+      -0.1239893966355493,
+      0.3080567702806175,
+      0.9432537600276251
+    ],
+    "ViewAngle": 0.6981317007977098,
+    "ZoomRate": 1
+  },
   "Spectrums": {
     "DefaultSpectrum": "default",
     "Spectrums": [
@@ -355,6 +391,8 @@ default_visualisation = {
             "ExtendAbove": True,
             "ExtendBelow": True,
             "FieldComponent": 1,
+            "FixMaximum": False,
+            "FixMinimum": False,
             "NumberOfBands": 10,
             "RangeMaximum": 1,
             "RangeMinimum": 0,
@@ -392,25 +430,5 @@ default_visualisation = {
         ]
       }
     ]
-  },
-  "Sceneviewer": {
-   "AntialiasSampling" : 0,
-   "BackgroundColourRGB" : [ 1, 1, 1 ],
-   "EyePosition" : [ 1.476158100226215, 2.308947124720783, 5.259347469576348 ],
-   "FarClippingPlane" : 9.973717650890119,
-   "LightingLocalViewer" : False,
-   "LightingTwoSided" : True,
-   "LookatPosition" : [ 0.7499999906867743, 0.4949999954551458, 0.7499999906867743 ],
-   "NearClippingPlane" : 0.2457230375503514,
-   "PerturbLinesFlag" : False,
-   "ProjectionMode" : "PARALLEL",
-   "Scene" : "/",
-   "Scenefilter" : "default",
-   "TranslationRate" : 1,
-   "TransparencyMode" : "FAST",
-   "TumbleRate" : 1.5,
-   "UpVector" : [ 0.001222424923825126, 0.9276818468650682, -0.3733696515175348 ],
-   "ViewAngle" : 0.6981317007977296,
-   "ZoomRate" : 1
   }
 }
