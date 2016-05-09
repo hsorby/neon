@@ -28,7 +28,7 @@ class ProblemView(BaseView):
 
     def __init__(self, shared_opengl_widget, parent=None):
         super(ProblemView, self).__init__(parent)
-        self._name = 'Problem View'
+        self._name = 'Problem'
 
         self._ui = Ui_ProblemView()
         self._ui.setupUi(self)

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'res/designer/mainwindow.ui'
+# Form implementation generated from reading ui file 'res\designer\mainwindow.ui'
 #
-# Created: Mon Jan 25 14:08:00 2016
+# Created: Mon May  9 12:25:23 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,8 +25,8 @@ class Ui_MainWindow(object):
         self.viewStackedWidget.setObjectName("viewStackedWidget")
         self.horizontalLayout.addWidget(self.viewStackedWidget)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtGui.QMenuBar()
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 855, 30))
+        self.menubar = QtGui.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 855, 26))
         self.menubar.setObjectName("menubar")
         self.menu_File = QtGui.QMenu(self.menubar)
         self.menu_File.setObjectName("menu_File")
@@ -44,9 +44,18 @@ class Ui_MainWindow(object):
         self.statusbar.setMaximumSize(QtCore.QSize(16777215, 0))
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.toolBar = QtGui.QToolBar(MainWindow)
-        self.toolBar.setObjectName("toolBar")
-        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
+        self.toolBarFile = QtGui.QToolBar(MainWindow)
+        self.toolBarFile.setObjectName("toolBarFile")
+        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBarFile)
+        self.toolBarView = QtGui.QToolBar(MainWindow)
+        self.toolBarView.setObjectName("toolBarView")
+        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBarView)
+        self.toolBarEdit = QtGui.QToolBar(MainWindow)
+        self.toolBarEdit.setObjectName("toolBarEdit")
+        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBarEdit)
+        self.toolBarDialog = QtGui.QToolBar(MainWindow)
+        self.toolBarDialog.setObjectName("toolBarDialog")
+        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBarDialog)
         self.action_Open = QtGui.QAction(MainWindow)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/neon/images/icons/document-open.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -136,16 +145,14 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menu_Edit.menuAction())
         self.menubar.addAction(self.menu_View.menuAction())
         self.menubar.addAction(self.menu_Help.menuAction())
-        self.toolBar.addAction(self.action_New)
-        self.toolBar.addAction(self.action_Open)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.action_Save)
-        self.toolBar.addAction(self.action_Save_As)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.action_Redo)
-        self.toolBar.addAction(self.action_Undo)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.action_Snapshot)
+        self.toolBarFile.addAction(self.action_New)
+        self.toolBarFile.addAction(self.action_Open)
+        self.toolBarFile.addSeparator()
+        self.toolBarFile.addAction(self.action_Save)
+        self.toolBarFile.addAction(self.action_Save_As)
+        self.toolBarEdit.addAction(self.action_Redo)
+        self.toolBarEdit.addAction(self.action_Undo)
+        self.toolBarDialog.addAction(self.action_Snapshot)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -157,7 +164,10 @@ class Ui_MainWindow(object):
         self.menu_Edit.setTitle(QtGui.QApplication.translate("MainWindow", "E&dit", None, QtGui.QApplication.UnicodeUTF8))
         self.menu_Help.setTitle(QtGui.QApplication.translate("MainWindow", "&Help", None, QtGui.QApplication.UnicodeUTF8))
         self.menu_View.setTitle(QtGui.QApplication.translate("MainWindow", "&View", None, QtGui.QApplication.UnicodeUTF8))
-        self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolBarFile.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolBarView.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar_2", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolBarEdit.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolBarDialog.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.action_Open.setText(QtGui.QApplication.translate("MainWindow", "&Open", None, QtGui.QApplication.UnicodeUTF8))
         self.action_Open.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+O", None, QtGui.QApplication.UnicodeUTF8))
         self.action_Save.setText(QtGui.QApplication.translate("MainWindow", "&Save", None, QtGui.QApplication.UnicodeUTF8))
