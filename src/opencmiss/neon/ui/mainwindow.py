@@ -193,13 +193,14 @@ class MainWindow(QtGui.QMainWindow):
         self.dockWidgetContentsSceneviewerEditor.setObjectName("dockWidgetContentsSceneviewerEditor")
         self.dockWidgetSceneviewerEditor.setWidget(self.dockWidgetContentsSceneviewerEditor)
         self.dockWidgetSceneviewerEditor.setHidden(True)
-        self.dockWidgetSceneviewerEditor.visibilityChanged.connect( \
+        self.dockWidgetSceneviewerEditor.visibilityChanged.connect(
             self.dockWidgetContentsSceneviewerEditor.setEnableUpdates)
 
         self.dockWidgetSpectrumEditor = QtGui.QDockWidget(self)
         self.dockWidgetSpectrumEditor.setWindowTitle('Spectrum Editor')
         self.dockWidgetSpectrumEditor.setObjectName("dockWidgetSpectrumEditor")
-        self.dockWidgetContentsSpectrumEditor = SpectrumEditorWidget(self.dockWidgetSpectrumEditor, self._ui.one_gl_widget_to_rule_them_all)
+        self.dockWidgetContentsSpectrumEditor = SpectrumEditorWidget(
+            self.dockWidgetSpectrumEditor, self._ui.one_gl_widget_to_rule_them_all)
         self.dockWidgetContentsSpectrumEditor.setObjectName("dockWidgetContentsSpectrumEditor")
         self.dockWidgetSpectrumEditor.setWidget(self.dockWidgetContentsSpectrumEditor)
         self.dockWidgetSpectrumEditor.setHidden(True)
@@ -290,6 +291,10 @@ class MainWindow(QtGui.QMainWindow):
             settings.setValue(key.getName(), self._view_states[key])
         settings.endGroup()
 
+        settings.beginGroup('PreferencesDialog')
+        settings.setValue('state', self._preferences_dialog.serialize())
+        settings.endGroup()
+
         settings.beginGroup('SnapshotDialog')
         settings.setValue('state', self._snapshot_dialog.serialize())
         settings.endGroup()
@@ -312,7 +317,8 @@ class MainWindow(QtGui.QMainWindow):
             self._addRecent(settings.value('item'))
         settings.endArray()
         currentViewIndex = settings.value('current_view', '0')
-        settings.endGroup()
+
+        settings.endGroup()  # MainWindow
 
         settings.beginGroup('views')
         for key in self._view_states:
@@ -322,6 +328,12 @@ class MainWindow(QtGui.QMainWindow):
 
         self._setCurrentView(currentViewIndex)
         self._postChangeView()
+        # self._ui.toolBarView.objectName()
+        # self._ui.toolBarView.setVisible(False)
+
+        settings.beginGroup('PreferencesDialog')
+        self._preferences_dialog.deserialize(settings.value('state', ''))
+        settings.endGroup()
 
         settings.beginGroup('SnapshotDialog')
         self._snapshot_dialog.deserialize(settings.value('state', ''))
@@ -420,6 +432,7 @@ class MainWindow(QtGui.QMainWindow):
             action_view.setActionGroup(action_group)
             action_view.triggered.connect(self._viewTriggered)
             self._ui.menu_View.addAction(action_view)
+            self._ui.toolBarView.addAction(action_view)
 
         self._ui.menu_View.addSeparator()
 
