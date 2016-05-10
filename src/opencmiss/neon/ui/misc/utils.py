@@ -16,6 +16,10 @@
 from functools import wraps
 
 from PySide import QtCore, QtGui
+import sys
+from io import StringIO
+import contextlib
+
 
 
 def set_wait_cursor(f):
@@ -33,3 +37,18 @@ def set_wait_cursor(f):
             # Always unset
             QtGui.QApplication.restoreOverrideCursor()
     return do_wait_cursor
+
+
+@contextlib.contextmanager
+def stdout_capture(stdout=None, stderr=None):
+    old = sys.stdout
+    olderr = sys.stderr
+    if stdout is None:
+        stdout = StringIO()
+    if stderr is None:
+        stderr = StringIO()
+    sys.stdout = stdout
+    sys.stderr = stderr
+    yield stdout, stderr
+    sys.stdout = old
+    sys.stderr = olderr

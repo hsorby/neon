@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>976</height>
+    <width>870</width>
+    <height>849</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,40 +17,56 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="tabExecutable">
+     <widget class="QWidget" name="tabGeneral">
       <attribute name="title">
-       <string>Executable</string>
+       <string>General</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="groupBox_5">
          <property name="title">
-          <string>Executable</string>
+          <string>General</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="checkBoxInBuiltExecutable">
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QRadioButton" name="radioButtonTreeModelSmall">
             <property name="text">
-             <string>Use in-built executable</string>
+             <string>Small tree</string>
             </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupTreeModel</string>
+            </attribute>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_19">
+          <item>
+           <widget class="QRadioButton" name="radioButtonTreeModelLarge">
             <property name="text">
-             <string>Executable:</string>
+             <string>Large tree</string>
             </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupTreeModel</string>
+            </attribute>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEditExecutable"/>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="pushButtonChooseExecutable">
+          <item>
+           <widget class="QRadioButton" name="radioButtonTreeModelCustom">
             <property name="text">
-             <string>Choose</string>
+             <string>Custom tree</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupTreeModel</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBoxAdvanced">
+            <property name="text">
+             <string>Advanced settings</string>
             </property>
            </widget>
           </item>
@@ -58,17 +74,49 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
+        <spacer name="verticalSpacer_7">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>766</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabScript">
+      <attribute name="title">
+       <string>Script</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>2</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Script</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QPlainTextEdit" name="plainTextEditScript">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>2</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -76,76 +124,85 @@
       <attribute name="title">
        <string>File Input/Output(s)</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Tree</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_22">
-              <property name="text">
-               <string>ipnode:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEditIpNode"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonChooseIpNode">
-              <property name="text">
-               <string>Choose</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="3" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <item>
-             <widget class="QLabel" name="label_21">
-              <property name="text">
-               <string>ipfiel:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEditIpField"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonChooseIpField">
-              <property name="text">
-               <string>Choose</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
            <widget class="QCheckBox" name="checkBoxInBuiltTree">
             <property name="text">
              <string>Use in-built tree files</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>ipnode:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="lineEditIpNode"/>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="pushButtonChooseIpNode">
+              <property name="text">
+               <string>Choose</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
              <widget class="QLabel" name="label_23">
               <property name="text">
                <string>ipelem:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="1" column="1">
              <widget class="QLineEdit" name="lineEditIpElem"/>
             </item>
-            <item>
+            <item row="1" column="2">
              <widget class="QPushButton" name="pushButtonChooseIpElem">
+              <property name="text">
+               <string>Choose</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>ipfiel:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="lineEditIpField"/>
+            </item>
+            <item row="2" column="2">
+             <widget class="QPushButton" name="pushButtonChooseIpField">
+              <property name="text">
+               <string>Choose</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_33">
+              <property name="text">
+               <string>ipmesh:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="lineEditIpMesh"/>
+            </item>
+            <item row="3" column="2">
+             <widget class="QPushButton" name="pushButtonChooseIpMesh">
               <property name="text">
                <string>Choose</string>
               </property>
@@ -153,7 +210,7 @@
             </item>
            </layout>
           </item>
-          <item row="6" column="0">
+          <item>
            <spacer name="verticalSpacer_5">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -165,27 +222,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="4" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_14">
-            <item>
-             <widget class="QLabel" name="label_33">
-              <property name="text">
-               <string>ipmesh:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEditIpMesh"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonChooseIpMesh">
-              <property name="text">
-               <string>Choose</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </item>
          </layout>
         </widget>
@@ -247,102 +283,86 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
              <widget class="QLabel" name="label_26">
               <property name="text">
                <string>Terminal exnode:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="0" column="1">
              <widget class="QLineEdit" name="lineEditTerminalExNode"/>
             </item>
-            <item>
+            <item row="0" column="2">
              <widget class="QPushButton" name="pushButtonChooseTerminalExNode">
               <property name="text">
                <string>Choose</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
+            <item row="1" column="0">
              <widget class="QLabel" name="label_24">
               <property name="text">
                <string>Tree exelem:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="1" column="1">
              <widget class="QLineEdit" name="lineEditTreeExElem"/>
             </item>
-            <item>
+            <item row="1" column="2">
              <widget class="QPushButton" name="pushButtonChooseTreeExElem">
               <property name="text">
                <string>Choose</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
+            <item row="2" column="0">
              <widget class="QLabel" name="label_20">
               <property name="text">
                <string>Tree exnode:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="2" column="1">
              <widget class="QLineEdit" name="lineEditTreeExNode"/>
             </item>
-            <item>
+            <item row="2" column="2">
              <widget class="QPushButton" name="pushButtonChooseTreeExNode">
               <property name="text">
                <string>Choose</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <item>
+            <item row="3" column="0">
              <widget class="QLabel" name="label_27">
               <property name="text">
                <string>Ventilation exelem:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="3" column="1">
              <widget class="QLineEdit" name="lineEditVentilationExElem"/>
             </item>
-            <item>
+            <item row="3" column="2">
              <widget class="QPushButton" name="pushButtonChooseVentilationExElem">
               <property name="text">
                <string>Choose</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_13">
-            <item>
+            <item row="4" column="0">
              <widget class="QLabel" name="label_32">
               <property name="text">
                <string>Radius exelem:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="4" column="1">
              <widget class="QLineEdit" name="lineEditRadiusExElem"/>
             </item>
-            <item>
+            <item row="4" column="2">
              <widget class="QPushButton" name="pushButtonChooseRadiusExElem">
               <property name="text">
                <string>Choose</string>
@@ -763,4 +783,7 @@
  </tabstops>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroupTreeModel"/>
+ </buttongroups>
 </ui>

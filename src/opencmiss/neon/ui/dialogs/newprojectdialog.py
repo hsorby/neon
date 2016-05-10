@@ -19,6 +19,7 @@ from opencmiss.neon.ui.dialogs.ui_newprojectdialog import Ui_NewProjectDialog
 
 
 BIOMENG321 = False
+VENTILATION = True
 
 
 class NewProjectDialog(QtGui.QDialog):
@@ -42,8 +43,11 @@ class NewProjectDialog(QtGui.QDialog):
     def _makeConnections(self):
         self._ui.toolButtonRecent.clicked.connect(self._recentClicked)
         self._ui.listViewProjects.doubleClicked.connect(self._itemDoubleClicked)
+        self._ui.pushButtonOpen.clicked.connect(self._openClicked)
         if BIOMENG321:
             self._proxy_model.setFilterFixedString('Biomeng')
+        elif VENTILATION:
+            self._proxy_model.setFilterFixedString('ventilation')
         else:
             self._ui.lineEditFilter.textChanged.connect(self._proxy_model.setFilterFixedString)
 
@@ -63,6 +67,10 @@ class NewProjectDialog(QtGui.QDialog):
 
     def _recentClicked(self):
         self._ui.toolButtonRecent.showMenu()
+
+    def _openClicked(self):
+        self.accept()
+        self.openClicked.emit()
 
     def _recentActionTriggered(self):
         self.reject()

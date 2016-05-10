@@ -39,26 +39,21 @@ class Ventilation(BaseSimulationView):
     def setup(self):
         parameters = {}
         parameters['name'] = self._problem.getName()
+        parameters['general'] = self._problem.getGeneralSettings()
+        parameters['script'] = self._problem.getScript()
         parameters['file_input_outputs'] = self._problem.getFileInputOutputs()
         parameters['main_parameters'] = self._problem.getMainParameters()
         parameters['flow_parameters'] = self._problem.getFlowParameters()
 
         self._simulation.setParameters(parameters)
-        self._simulation.setExecutable(self._problem.getExecutable())
         self._simulation.setup()
+        self._ui.plainTextEdit.clear()
 
     @set_wait_cursor
     def execute(self):
-        t, q = self._simulation.execute()
-        while t.isAlive():
-            try:
-                line = q.get_nowait()  # or q.get(timeout=.1)
-                line = line.rstrip()
-            except Empty:
-                pass
-            else:
-                self._ui.plainTextEdit.appendPlainText(line)
-                QtGui.QApplication.processEvents()
+        s, r = self._simulation.execute()
+        self._ui.plainTextEdit.setPlainText(s.getvalue())
+        self._ui.plainTextEdit.appendPlainText(r.getvalue())
 
     def cleanup(self):
         self._ui.plainTextEdit.appendPlainText('')

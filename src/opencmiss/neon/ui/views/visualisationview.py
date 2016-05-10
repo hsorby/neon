@@ -50,7 +50,8 @@ class VisualisationView(BaseView):
         self._ui.widget.getSceneviewer().readDescription(json.dumps(state))
 
     def getSceneviewerState(self):
-        d = json.loads(self._ui.widget.getSceneviewer().writeDescription())
+        sceneviewer = self._ui.widget.getSceneviewer()
+        d = json.loads(sceneviewer.writeDescription() if sceneviewer is not None else '{}')
         return d
 
     def saveImage(self, filename, wysiwyg, width, height):

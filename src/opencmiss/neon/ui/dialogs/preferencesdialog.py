@@ -115,7 +115,7 @@ name_map['toolBarFile'] = 'File toolbar'
 
 
 def getObjectName(name):
-    
+
     object_name = "not-found"
     list_of_name = [k for k, v in name_map.items() if v == name]
     if list_of_name:

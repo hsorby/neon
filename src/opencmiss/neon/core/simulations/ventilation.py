@@ -22,6 +22,7 @@ from tempfile import NamedTemporaryFile, mkdtemp
 from opencmiss.neon.core.simulations.local import LocalSimulation
 from opencmiss.neon.core.serializers.identifiervalue import IdentifierValue
 from opencmiss.neon.settings.mainsettings import EXTERNAL_DATA_DIR
+from opencmiss.neon.ui.misc.utils import stdout_capture
 
 try:
     from Queue import Queue
@@ -46,11 +47,19 @@ class Ventilation(LocalSimulation):
         self._file_handles = {}
         self._dir_handles = {}
         self._output_filenames = {}
+        self._initial_wd = None
 
     def getOutputFilenames(self):
         return self._output_filenames
 
+    def isSmallTree(self):
+        return self._parameters['general']['active_geometry'] == 'small_tree'
+
+    def isLargeTree(self):
+        return self._parameters['general']['active_geometry'] == 'large_tree'
+
     def setup(self):
+        general_settings = self._parameters['general']
         file_input_outputs = self._parameters['file_input_outputs']
 
         output_file_keys = ['terminal_exnode', 'tree_exnode', 'tree_exelem', 'ventilation_exelem', 'radius_exelem']
@@ -83,22 +92,31 @@ class Ventilation(LocalSimulation):
 
         self._output_filenames = output_filenames
 
-        inbuilt_tree_ipelem = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom', 'tree.ipelem')
-        tree_ipelem = inbuilt_tree_ipelem if file_input_outputs['tree_inbuilt'] or not file_input_outputs['tree_ipelem'] else file_input_outputs['tree_ipelem']
-        inbuilt_tree_ipnode = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom', 'tree.ipnode')
-        tree_ipnode = inbuilt_tree_ipnode if file_input_outputs['tree_inbuilt'] or not file_input_outputs['tree_ipnode'] else file_input_outputs['tree_ipnode']
-        inbuilt_tree_ipfiel = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom', 'tree.ipfiel')
-        tree_ipfiel = inbuilt_tree_ipfiel if file_input_outputs['tree_inbuilt'] or not file_input_outputs['tree_ipfield'] else file_input_outputs['tree_ipfield']
-        inbuilt_tree_ipmesh = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom', 'tree.ipmesh')
-        tree_ipmesh = inbuilt_tree_ipmesh if file_input_outputs['tree_inbuilt'] or not file_input_outputs['tree_ipmesh'] else file_input_outputs['tree_ipmesh']
+        tree_geometry = general_settings['active_geometry']
+        inbuilt_tree_ipelem = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom',
+                                           '{0}.ipelem'.format(tree_geometry))
+        tree_ipelem = inbuilt_tree_ipelem if file_input_outputs['tree_inbuilt'] or not \
+            file_input_outputs['tree_ipelem'] else file_input_outputs['tree_ipelem']
+        inbuilt_tree_ipnode = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom',
+                                           '{0}.ipnode'.format(tree_geometry))
+        tree_ipnode = inbuilt_tree_ipnode if file_input_outputs['tree_inbuilt'] or not \
+            file_input_outputs['tree_ipnode'] else file_input_outputs['tree_ipnode']
+        inbuilt_tree_ipfiel = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom',
+                                           '{0}.ipfiel'.format(tree_geometry))
+        tree_ipfiel = inbuilt_tree_ipfiel if file_input_outputs['tree_inbuilt'] or not \
+            file_input_outputs['tree_ipfield'] else file_input_outputs['tree_ipfield']
+        inbuilt_tree_ipmesh = os.path.join(EXTERNAL_DATA_DIR, self._parameters['name'], 'Geom',
+                                           '{0}.ipmesh'.format(tree_geometry))
+        tree_ipmesh = inbuilt_tree_ipmesh if file_input_outputs['tree_inbuilt'] or not \
+            file_input_outputs['tree_ipmesh'] else file_input_outputs['tree_ipmesh']
 
         geometry_main = {}
-        geometry_main['ipelem'] = "'{0}'".format(tree_ipelem)
-        geometry_main['ipnode'] = "'{0}'".format(tree_ipnode)
-        geometry_main['ipfiel'] = "'{0}'".format(tree_ipfiel)
-        geometry_main['ipmesh'] = "'{0}'".format(tree_ipmesh)
-        geometry_main['exnode'] = "'{0}'".format(output_filenames['tree_exnode'])
-        geometry_main['exelem'] = "'{0}'".format(output_filenames['tree_exelem'])
+        geometry_main['airway_ipelem'] = "'{0}'".format(tree_ipelem)
+        geometry_main['airway_ipnode'] = "'{0}'".format(tree_ipnode)
+        geometry_main['airway_ipfiel'] = "'{0}'".format(tree_ipfiel)
+        geometry_main['airway_ipmesh'] = "'{0}'".format(tree_ipmesh)
+        geometry_main['airway_exnode'] = "'{0}'".format(output_filenames['tree_exnode'])
+        geometry_main['airway_exelem'] = "'{0}'".format(output_filenames['tree_exelem'])
 
         self._file_handles['geo_flow'] = os.path.join(self._dir_handles['para'], 'geometry_main.txt')
         with open(self._file_handles['geo_flow'], 'w') as f:
@@ -115,16 +133,28 @@ class Ventilation(LocalSimulation):
             string = self._serializer.serialize(self._parameters['flow_parameters'])
             f.write(string)
 
-    def execute(self):
-        p = Popen([self._executable], cwd=self._dir_handles['root'], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
-        q = Queue()
-        t = Thread(target=enqueue_output, args=(p.stdout, q))
-        t.daemon = True  # thread dies with the program
-        t.start()
+        self._initial_wd = os.getcwd()
 
-        return t, q
+    def execute(self):
+        script = self._parameters['script']
+        os.chdir(self._dir_handles['root'])
+        code = compile(script, "ventilation_script.py", 'exec')
+        with stdout_capture() as s:
+            gs = {}
+            ls = {}
+            exec(code, gs, ls)
+        # print(gs)
+        # print(ls)
+        # p = Popen([self._executable], cwd=self._dir_handles['root'], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
+        # q = Queue()
+        # t = Thread(target=enqueue_output, args=(p.stdout, q))
+        # t.daemon = True  # thread dies with the program
+        # t.start()
+
+        return s
 
     def cleanup(self):
+        os.chdir(self._initial_wd)
         os.remove(self._file_handles['geo_main'])
         os.remove(self._file_handles['geo_flow'])
         os.remove(self._file_handles['par_main'])

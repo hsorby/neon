@@ -195,7 +195,8 @@ class SceneviewerWidget(QtOpenGL.QGLWidget):
         will clear the background so any OpenGL drawing of your own needs to go after this
         API call.
         '''
-        self._sceneviewer.renderScene()
+        if self._sceneviewer is not None:
+            self._sceneviewer.renderScene()
         # paintGL end
 
     def _zincSceneviewerEvent(self, event):

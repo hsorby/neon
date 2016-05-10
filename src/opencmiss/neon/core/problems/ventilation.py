@@ -14,25 +14,46 @@
    limitations under the License.
 '''
 import sys
-
-from opencmiss.neon.core.problems.external import ExternalProblem
 import json
+
+from opencmiss.neon.core.problems.base import BaseProblem
 
 
 def getExecutableForPlatform():
     return 'ventilation-' + sys.platform
 
 
-class Ventilation(ExternalProblem):
+class Ventilation(BaseProblem):
 
     def __init__(self):
         super(Ventilation, self).__init__()
         self.setName('Ventilation')
-        self.setInBuiltExecutable(getExecutableForPlatform())
+        # self.setInBuiltExecutable(getExecutableForPlatform())
 
+        self._general_settings = self._defineDefaultGeneralSettings()
+        self._script = self._defineDefaultScript()
         self._file_input_outputs = self._defineDefaultFileInputOutputs()
         self._main_parameters = self._defineDefaultMainParameters()
         self._flow_parameters = self._defineDefaultFlowParameters()
+
+    def _defineDefaultGeneralSettings(self):
+        d = {}
+        d['advanced'] = False
+        d['active_geometry'] = 'small_tree'
+
+        return d
+
+    def _defineDefaultScript(self):
+        # d = {}
+        d = 'from aether.diagnostics import set_diagnostics_on\n' \
+            'from aether.indices import ventilation_indices\n' \
+            '\n' \
+            'set_diagnostics_on(True)\n' \
+            '# define an airway tree geometry\n' \
+            'ventilation_indices()\n' \
+            '\n'
+
+        return d
 
     def _defineDefaultMainParameters(self):
         d = {}
@@ -81,6 +102,12 @@ class Ventilation(ExternalProblem):
 
         return d
 
+    def getGeneralSettings(self):
+        return self._general_settings
+
+    def getScript(self):
+        return self._script
+
     def getFileInputOutputs(self):
         return self._file_input_outputs
 
@@ -89,6 +116,12 @@ class Ventilation(ExternalProblem):
 
     def getFlowParameters(self):
         return self._flow_parameters
+
+    def updateGeneralSettings(self, parameters):
+        self._general_settings.update(parameters)
+
+    def updateScript(self, parameters):
+        self._script = parameters
 
     def updateMainParameters(self, parameters):
         self._main_parameters.update(parameters)
@@ -101,8 +134,10 @@ class Ventilation(ExternalProblem):
 
     def serialize(self):
         d = {}
-        d['executable_inbuilt'] = self.isInBuiltExecutable()
-        d['executable'] = self.getExecutable() if not self.isInBuiltExecutable() else ''
+        # d['executable_inbuilt'] = self.isInBuiltExecutable()
+        d['general'] = self._general_settings
+        d['script'] = self._script
+        # d['executable'] = self.getExecutable() if not self.isInBuiltExecutable() else ''
         d['file_input_outputs'] = self._file_input_outputs
         d['main_parameters'] = self._main_parameters
         d['flow_parameters'] = self._flow_parameters
@@ -111,11 +146,14 @@ class Ventilation(ExternalProblem):
 
     def deserialize(self, string):
         d = json.loads(string)
-        executable_inbuilt = d['executable_inbuilt'] if 'executable_inbuilt' in d else True
-        if executable_inbuilt:
-            self.setInBuiltExecutable(getExecutableForPlatform())
-        else:
-            self.setExecutable(d['executable'] if 'executable' in d else '')
+        # executable_inbuilt = d['executable_inbuilt'] if 'executable_inbuilt' in d else True
+        # if executable_inbuilt:
+        #     self.setInBuiltExecutable(getExecutableForPlatform())
+        # else:
+        #     self.setExecutable(d['executable'] if 'executable' in d else '')
+
+        self._general_settings = d['general'] if 'general' in d else self._defineDefaultGeneralSettings()
+        self._script = d['script'] if 'script' in d else self._defineDefaultScript()
         self._file_input_outputs = d['file_input_outputs'] if 'file_input_outputs' in d else self._defineDefaultFileInputOutputs()
         self._main_parameters = d['main_parameters'] if 'main_parameters' in d else self._defineDefaultMainParameters()
         self._flow_parameters = d['flow_parameters'] if 'flow_parameters' in d else self._defineDefaultFlowParameters()

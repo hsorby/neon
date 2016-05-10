@@ -16,13 +16,13 @@
 import json
 import os.path
 
-from PySide import QtGui
+from PySide import QtCore, QtGui
 
 from opencmiss.neon.ui.problems.base import BaseProblem
 from opencmiss.neon.core.problems.constants import RespirationConstants
 from opencmiss.neon.ui.problems.ui_ventilationwidget import Ui_VentilationWidget
-from opencmiss.neon.core.problems.ventilation import getExecutableForPlatform
-
+# from opencmiss.neon.core.problems.ventilation import getExecutableForPlatform
+from opencmiss.neon.ui.misc.highlighter import PythonHighlighter
 
 class Ventilation(BaseProblem):
 
@@ -32,6 +32,9 @@ class Ventilation(BaseProblem):
         self._ui.setupUi(self)
         self._setupUi()
 
+        self._advanced_tabs = [self._ui.tabScript, self._ui.tabFileInputs]
+        self._active_tab = 0
+
         self._location = None
 
         self._createMaps()
@@ -40,7 +43,7 @@ class Ventilation(BaseProblem):
 
     def _setupUi(self):
         enums = []
-        self._ui.tabWidget.setCurrentIndex(2)
+        self._ui.tabWidget.setCurrentIndex(0)
         self._ui.comboBoxExpirationType.clear()
         class_attributes = RespirationConstants.ExpirationType.__dict__
         for a in class_attributes:
@@ -51,11 +54,20 @@ class Ventilation(BaseProblem):
         self._map_expiration_index_to_string = {e[0]: e[1].lower() for e in enums}
         self._map_string_to_expiration_index = {e[1].lower(): e[0] for e in enums}
         self._ui.comboBoxExpirationType.addItems([e[1] for e in enums])
+        PythonHighlighter(self._ui.plainTextEditScript.document())
 
     def _createMaps(self):
         self._map_keys_to_ui = {}
         self._map_ui_to_keys = {}
         self._map_chooser_to_line_edit = {}
+
+        # General settings
+        self._map_keys_to_ui['small_tree'] = self._ui.radioButtonTreeModelSmall
+        self._map_ui_to_keys[self._ui.radioButtonTreeModelSmall] = 'small_tree'
+        self._map_keys_to_ui['large_tree'] = self._ui.radioButtonTreeModelLarge
+        self._map_ui_to_keys[self._ui.radioButtonTreeModelLarge] = 'large_tree'
+        self._map_keys_to_ui['custom_tree'] = self._ui.radioButtonTreeModelCustom
+        self._map_ui_to_keys[self._ui.radioButtonTreeModelCustom] = 'custom_tree'
 
         # The executable ui is not added to the map, it is dealt with separately
         # File input outputs
@@ -125,7 +137,7 @@ class Ventilation(BaseProblem):
         self._map_ui_to_keys[self._ui.doubleSpinBoxChestWallCompliance] = 'chest_wall_compliance'
 
         # Chooser button buddies
-        self._map_chooser_to_line_edit[self._ui.pushButtonChooseExecutable] = self._ui.lineEditExecutable
+        # self._map_chooser_to_line_edit[self._ui.pushButtonChooseExecutable] = self._ui.lineEditExecutable
         self._map_chooser_to_line_edit[self._ui.pushButtonChooseTreeExElem] = self._ui.lineEditTreeExElem
         self._map_chooser_to_line_edit[self._ui.pushButtonChooseTreeExNode] = self._ui.lineEditTreeExNode
         self._map_chooser_to_line_edit[self._ui.pushButtonChooseFlow] = self._ui.lineEditFlow
@@ -138,7 +150,15 @@ class Ventilation(BaseProblem):
         self._map_chooser_to_line_edit[self._ui.pushButtonChooseRadiusExElem] = self._ui.lineEditRadiusExElem
 
     def _makeConnections(self):
-        self._ui.pushButtonChooseExecutable.clicked.connect(self._executableChooserClicked)
+        # self._ui.pushButtonChooseExecutable.clicked.connect(self._executableChooserClicked)
+        # General
+        self._ui.checkBoxAdvanced.clicked.connect(self._advancedClicked)
+        self._ui.radioButtonTreeModelCustom.clicked.connect(self._radioButtonClicked)
+        self._ui.radioButtonTreeModelLarge.clicked.connect(self._radioButtonClicked)
+        self._ui.radioButtonTreeModelSmall.clicked.connect(self._radioButtonClicked)
+
+        # Script
+        self._ui.plainTextEditScript.textChanged.connect(self._scriptChanged)
 
         self._ui.pushButtonChooseTreeExElem.clicked.connect(self._chooserClicked)
         self._ui.pushButtonChooseTreeExNode.clicked.connect(self._chooserClicked)
@@ -151,8 +171,8 @@ class Ventilation(BaseProblem):
         self._ui.pushButtonChooseVentilationExElem.clicked.connect(self._chooserClicked)
         self._ui.pushButtonChooseRadiusExElem.clicked.connect(self._chooserClicked)
 
-        self._ui.checkBoxInBuiltExecutable.clicked.connect(self._inBuiltExecutableClicked)
-        self._ui.lineEditExecutable.editingFinished.connect(self._executableLocationChanged)
+        # self._ui.checkBoxInBuiltExecutable.clicked.connect(self._inBuiltExecutableClicked)
+        # self._ui.lineEditExecutable.editingFinished.connect(self._executableLocationChanged)
         self._ui.checkBoxInBuiltFlow.clicked.connect(self._inBuiltFlowClicked)
         self._ui.checkBoxInBuiltTree.clicked.connect(self._inBuiltTreeClicked)
 
@@ -178,13 +198,13 @@ class Ventilation(BaseProblem):
         self._ui.comboBoxExpirationType.currentIndexChanged.connect(self._updateFlowParameterValue)
         self._ui.doubleSpinBoxChestWallCompliance.valueChanged.connect(self._updateFlowParameterValue)
 
-    def _inBuiltExecutableClicked(self):
-        state = self._ui.checkBoxInBuiltExecutable.isChecked()
-        self._ui.lineEditExecutable.setEnabled(not state)
-        self._ui.pushButtonChooseExecutable.setEnabled(not state)
-        if state:
-            self._ui.lineEditExecutable.clear()
-            self._problem.setInBuiltExecutable(getExecutableForPlatform())
+    # def _inBuiltExecutableClicked(self):
+    #     state = self._ui.checkBoxInBuiltExecutable.isChecked()
+    #     self._ui.lineEditExecutable.setEnabled(not state)
+    #     self._ui.pushButtonChooseExecutable.setEnabled(not state)
+    #     if state:
+    #         self._ui.lineEditExecutable.clear()
+    #         self._problem.setInBuiltExecutable(getExecutableForPlatform())
 
     def _inBuiltFlowClicked(self):
         state = self._ui.checkBoxInBuiltFlow.isChecked()
@@ -203,6 +223,8 @@ class Ventilation(BaseProblem):
         self._ui.pushButtonChooseIpField.setEnabled(not state)
         self._ui.lineEditIpNode.setEnabled(not state)
         self._ui.pushButtonChooseIpNode.setEnabled(not state)
+        self._ui.lineEditIpMesh.setEnabled(not state)
+        self._ui.pushButtonChooseIpMesh.setEnabled(not state)
 
     def _isEnumParameter(self, parameter):
         enum_parameters = ['expiration_type']
@@ -219,12 +241,40 @@ class Ventilation(BaseProblem):
 
         return key in output_files
 
-    def _updateExecutableParameters(self):
-        state = self._problem.isInBuiltExecutable()
-        self._ui.checkBoxInBuiltExecutable.setChecked(state)
-        self._inBuiltExecutableClicked()
-        if not state:
-            self._ui.lineEditExecutable.setText(self._problem.getExecutable())
+    # def _updateExecutableParameters(self):
+    #     state = self._problem.isInBuiltExecutable()
+    #     self._ui.checkBoxInBuiltExecutable.setChecked(state)
+    #     self._inBuiltExecutableClicked()
+    #     if not state:
+    #         self._ui.lineEditExecutable.setText(self._problem.getExecutable())
+
+    def _setAdvancedMode(self, advanced_mode):
+        tab_header = {'tabScript': 'Script', 'tabFileInputs': 'File Input/Output(s)'}
+        for tab in self._advanced_tabs:
+            if advanced_mode:
+                index = self._advanced_tabs.index(tab)
+
+                self._ui.tabWidget.insertTab(index + 1, tab, tab_header[tab.objectName()])
+            else:
+                index = self._ui.tabWidget.indexOf(tab)
+                self._ui.tabWidget.removeTab(index)
+        # self._ui.tabFileInputs.setVisible(advanced_mode)
+        # self._ui.tabExecutable.setVisible(advanced_mode)
+        self._ui.radioButtonTreeModelCustom.setVisible(advanced_mode)
+
+    def _updateGeneral(self):
+        p = self._problem.getGeneralSettings()
+        for k in p:
+            if k == 'advanced':
+                self._ui.checkBoxAdvanced.setChecked(QtCore.Qt.Checked if p[k] else QtCore.Qt.Unchecked)
+                self._setAdvancedMode(p[k])
+            else:
+                ui = self._map_keys_to_ui[p[k]]
+                ui.setChecked(True)
+
+    def _updateScript(self):
+        p = self._problem.getScript()
+        self._ui.plainTextEditScript.setPlainText(p)
 
     def _updateFileInputOutputs(self):
         p = self._problem.getFileInputOutputs()
@@ -253,20 +303,33 @@ class Ventilation(BaseProblem):
             else:
                 ui.setValue(p[k])
 
-    def _executableLocationChanged(self):
-        self._problem.setExecutable(self._ui.lineEditExecutable.text())
+    # def _executableLocationChanged(self):
+    #     self._problem.setExecutable(self._ui.lineEditExecutable.text())
 
-    def _executableChooserClicked(self):
+    # def _executableChooserClicked(self):
+    #     sender = self.sender()
+    #     line_edit = self._map_chooser_to_line_edit[sender]
+    #     text = line_edit.text()
+    #     location = os.path.dirname(text) if text else self._location if self._location is not None else os.path.expanduser("~")
+    #     filename, _ = QtGui.QFileDialog.getOpenFileName(self, caption='Choose executable ...', dir=location,
+    #                                                     filter="Executable (*.exe *);;All (*.* *)")
+    #     if filename:
+    #         self._location = os.path.dirname(filename)
+    #         self._problem.setExecutable(filename)
+    #         line_edit.setText(filename)
+
+    def _advancedClicked(self):
         sender = self.sender()
-        line_edit = self._map_chooser_to_line_edit[sender]
-        text = line_edit.text()
-        location = os.path.dirname(text) if text else self._location if self._location is not None else os.path.expanduser("~")
-        filename, _ = QtGui.QFileDialog.getOpenFileName(self, caption='Choose executable ...', dir=location,
-                                                        filter="Executable (*.exe *);;All (*.* *)")
-        if filename:
-            self._location = os.path.dirname(filename)
-            self._problem.setExecutable(filename)
-            line_edit.setText(filename)
+        self._setAdvancedMode(sender.isChecked())
+        self._problem.updateGeneralSettings({'advanced': sender.isChecked()})
+
+    def _scriptChanged(self):
+        sender = self.sender()
+        self._problem.updateScript(sender.toPlainText())
+
+    def _radioButtonClicked(self):
+        sender = self.sender()
+        self._problem.updateGeneralSettings({'active_geometry': self._map_ui_to_keys[sender]})
 
     def _chooserClicked(self):
         sender = self.sender()
@@ -310,14 +373,17 @@ class Ventilation(BaseProblem):
     def deserialize(self, string):
         d = json.loads(string)
         self._location = d['location'] if 'location' in d else None
-        self._ui.tabWidget.setCurrentIndex(d['active_tab'] if 'active_tab' in d else 2)
+        self._active_tab = d['active_tab'] if 'active_tab' in d else self._active_tab
+
         if 'problem' in d:
             self._problem.deserialize(d['problem'])
 
         self.updateUi()
 
     def updateUi(self):
-        self._updateExecutableParameters()
+        # self._updateExecutableParameters()
+        self._updateGeneral()
+        self._updateScript()
         self._updateFileInputOutputs()
         self._updateMainParameters()
         self._updateFlowParameters()
