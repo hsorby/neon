@@ -57,13 +57,22 @@ mkl_def = which('mkl_def.dll')
 mpich2nemesis = which('mpich2nemesis.dll')
 additional_dlls = [dll[0] for dll in [mkl_core, mkl_avx, mkl_def, mpich2nemesis] if dll]
 
-APP = ['opencmiss/neon/neon.py']
-DATA_FILES = [('bin', [os.path.join('..', 'bin', 'ventilation-' + sys.platform + '.exe')]), 
-    (os.path.join('data', 'Ventilation', 'Geom'), [os.path.join('..', 'data', 'Ventilation', 'Geom', 'tree.ipelem'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'tree.ipnode'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'tree.ipfiel')]),
+#APP = ['opencmiss/neon/neon.py']
+APP = [
+    {
+        'script': 'opencmiss/neon/neon.py',       ### Main Python script
+        'icon_resources': [(0, '../res/win/Neon.ico')], ### Icon to embed into the PE file.
+        'dest_base' : 'Neon',
+    },
+]
+DATA_FILES = [
+    (os.path.join('data', 'Ventilation', 'Geom'), [os.path.join('..', 'data', 'Ventilation', 'Geom', 'small_tree.ipelem'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'small_tree.ipnode'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'small_tree.ipfiel'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'large_tree.ipelem'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'large_tree.ipnode'), os.path.join('..', 'data', 'Ventilation', 'Geom', 'large_tree.ipfiel')]),
     ('.', additional_dlls),
 ]
+PACKAGES = find_packages()
+PACKAGES.extend(['aether'])
 OPTIONS = {'py2exe': {
-        'packages': find_packages(),
+        'packages': PACKAGES,
         #'skip_archive': True,
         #'bundle_files': 2, # Unfortunately we cannot use anything other than 3 at this point in time
     }
@@ -71,7 +80,7 @@ OPTIONS = {'py2exe': {
 
 
 setup(
-    windows=['opencmiss/neon/neon.py'],
+    console=APP,
     options=OPTIONS,
     data_files=DATA_FILES,
 )

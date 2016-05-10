@@ -4,9 +4,9 @@
 ; You must define these values
   
   !define APP_NAME "Neon"
-  !define APP_VERSION "1.0.0"
+  !define APP_VERSION "0.2.0"
   !define APP_ORGANISATION "OpenCMISS"
-  !define VERSION "1.0.0"
+  !define VERSION "0.1.0"
   !define PATCH  "1"
   !define INST_DIR "..\..\src\dist"
 
