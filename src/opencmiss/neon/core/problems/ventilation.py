@@ -46,11 +46,37 @@ class Ventilation(BaseProblem):
     def _defineDefaultScript(self):
         # d = {}
         d = 'from aether.diagnostics import set_diagnostics_on\n' \
-            'from aether.indices import ventilation_indices\n' \
+            'from aether.indices import ventilation_indices, get_ne_radius\n' \
+            'from aether.filenames import read_geometry_main, read_geometry_evaluate_flow, get_filename\n' \
+            'from aether.geometry import define_node_geometry, define_1d_elements, define_rad_from_file, append_units\n' \
+            'from aether.ventilation import evaluate_flow\n' \
+            'from aether.exports import export_1d_elem_geometry, export_node_geometry, export_elem_field, export_1d_elem_field, export_terminal_solution\n' \
             '\n' \
-            'set_diagnostics_on(True)\n' \
+            'set_diagnostics_on(False)\n' \
+            '\n' \
             '# define an airway tree geometry\n' \
             'ventilation_indices()\n' \
+            'read_geometry_main()\n' \
+            'read_geometry_evaluate_flow()\n' \
+            'define_node_geometry(get_filename(\'airway_ipnode\'))\n' \
+            'define_1d_elements(get_filename(\'airway_ipelem\'))\n' \
+            'define_rad_from_file(get_filename(\'airway_ipfiel\'))\n' \
+            'append_units()\n' \
+            '\n' \
+            'evaluate_flow()\n' \
+            'group_name = \'vent_model\'\n' \
+            'export_1d_elem_geometry(get_filename(\'airway_exelem\'), group_name)\n' \
+            'export_node_geometry(get_filename(\'airway_exnode\'), group_name)\n' \
+            '\n' \
+            '# export flow element\n' \
+            'field_name = \'flow\'\n' \
+            'export_elem_field(get_filename(\'flowexelem\'), group_name, field_name)\n' \
+            '\n' \
+            '# export element field for radius\n' \
+            'ne_radius = get_ne_radius()\n' \
+            'field_name = \'radius\'\n' \
+            'export_1d_elem_field(ne_radius, get_filename(\'flowradiusexelem\'), group_name, field_name)\n' \
+            'export_terminal_solution(get_filename(\'exnode\'), group_name)\n' \
             '\n'
 
         return d

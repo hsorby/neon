@@ -21,7 +21,7 @@ from tempfile import NamedTemporaryFile, mkdtemp
 
 from opencmiss.neon.core.simulations.local import LocalSimulation
 from opencmiss.neon.core.serializers.identifiervalue import IdentifierValue
-from opencmiss.neon.settings.mainsettings import EXTERNAL_DATA_DIR
+from opencmiss.neon.settings.mainsettings import EXTERNAL_DATA_DIR, PYTHON3
 from opencmiss.neon.ui.misc.utils import stdout_capture
 
 try:
@@ -139,10 +139,15 @@ class Ventilation(LocalSimulation):
         script = self._parameters['script']
         os.chdir(self._dir_handles['root'])
         code = compile(script, "ventilation_script.py", 'exec')
-        with stdout_capture() as s:
-            gs = {}
-            ls = {}
-            exec(code, gs, ls)
+        if PYTHON3:
+            with stdout_capture() as s:
+                gs = {}
+                ls = {}
+                exec(code, gs, ls)
+        else:
+            ns = {}
+            with stdout_capture() as s:
+                exec code in ns
         # print(gs)
         # print(ls)
         # p = Popen([self._executable], cwd=self._dir_handles['root'], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
