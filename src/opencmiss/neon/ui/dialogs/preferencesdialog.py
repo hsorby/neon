@@ -14,7 +14,6 @@
    limitations under the License.
 '''
 import json
-from json import JSONDecodeError
 from PySide import QtCore, QtGui
 
 from opencmiss.neon.core.neonlogger import NeonLogger
@@ -102,9 +101,8 @@ class PreferencesDialog(QtGui.QDialog):
         try:
             state = json.loads(string)
             self._setState(state)
-        except JSONDecodeError as e:
-            NeonLogger.getLogger().error("Failed to read application preferences.")
-            state = {}
+        except ValueError as e:
+            NeonLogger.getLogger().error("Failed to read application preferences.\n" + str(e))
 
 
 name_map = {}
