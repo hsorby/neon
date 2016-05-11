@@ -8,10 +8,10 @@ create-dmg \
 --volicon "Neon-icon-v2.icns" \
 --background "installer_background.png" \
 --window-pos 200 120 \
---window-size 800 400 \
---icon-size 100 \
---icon Application.app 200 190 \
---hide-extension Application.app \
---app-drop-link 600 185 \
+--window-size 620 418 \
+--icon-size 130 \
+--icon Neon.app 100 200 \
+--hide-extension Neon.app \
+--app-drop-link 510 190 \
 Neon.dmg \
 ~/NeonApplication/
