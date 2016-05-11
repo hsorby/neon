@@ -5,13 +5,34 @@ Usage:
     python setup.py py2app
 """
 
-from setuptools import setup
-
-import opencmiss.zinc.context
+import os
+from setuptools import setup, find_packages
 
 APP = ['opencmiss/neon/neon.py']
-DATA_FILES = []
-OPTIONS = {'argv_emulation': True,
+DATA_FILES = [
+    (os.path.join('data', 'Ventilation', 'Geom'), [
+        os.path.join('..', 'data', 'Ventilation', 'Geom', 'small_tree.ipelem'),
+        os.path.join('..', 'data', 'Ventilation', 'Geom', 'small_tree.ipnode'),
+        os.path.join('..', 'data', 'Ventilation', 'Geom', 'small_tree.ipfiel'),
+        os.path.join('..', 'data', 'Ventilation', 'Geom', 'large_tree.ipelem'),
+        os.path.join('..', 'data', 'Ventilation', 'Geom', 'large_tree.ipnode'),
+        os.path.join('..', 'data', 'Ventilation', 'Geom', 'large_tree.ipfiel')]),
+]
+PACKAGES = find_packages()
+PACKAGES.extend(['aether'])
+OPTIONS = {
+    'argv_emulation': True,
+    'packages': PACKAGES,
+    'iconfile': os.path.join('..', 'res', 'osx','Neon-icon-v2.icns'),
+    'plist': {
+        'CFBundleName': 'Neon',
+        'CFBundleDisplayName': 'Neon',
+        'CFBundleGetInfoString': "Visual multiscale-modeling environment",
+        'CFBundleIdentifier': "org.opencmiss.osx.neon",
+        'CFBundleVersion': "0.1.0",
+        'CFBundleShortVersionString': "0.1.0",
+        'NSHumanReadableCopyright': u"Copyright 2016, University of Auckland, All Rights Reserved"
+    }
 #    'frameworks': ['/Users/hsor001/work/opencmiss-software/zinc-software/zinc/library-build-make/core/libzinc.r11285M.3.0.1.dylib']
 }
 

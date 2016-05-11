@@ -6,6 +6,14 @@ import subprocess
 MAIN_WINDOW_UI_FILE = 'src/opencmiss/neon/ui/ui_mainwindow.py'
 
 
+def create_destination_dir():
+    destination = os.path.join(os.environ['HOME'], 'NeonApplication')
+    if not os.path.isdir(destination):
+        os.mkdir(destination)
+
+    return destination
+
+
 def remove_parent_of_menubar():
     with open(MAIN_WINDOW_UI_FILE, 'r+') as f:
         s = f.read()
@@ -17,6 +25,10 @@ def remove_parent_of_menubar():
 
 def create_softlink_to_zinc(directory):
     subprocess.call(['ln', '-s', directory, 'zinc'])
+
+
+def create_softlink_to_iron(directory):
+    subprocess.call(['ln', '-s', directory, 'iron'])
 
 
 def execute_py2app_build():
@@ -46,8 +58,12 @@ def rm_build_dist():
     shutil.rmtree('dist')
 
 
-def rm_softlink():
+def rm_softlink_to_zinc():
     os.remove('zinc')
+
+
+def rm_softlink_to_iron():
+    os.remove('iron')
 
 
 def undo_code_change():
@@ -56,24 +72,28 @@ def undo_code_change():
 
 def main():
     import opencmiss.zinc.context
+    import opencmiss.iron.iron
 
-    directory = os.path.dirname(opencmiss.zinc.context.__file__)
-    base_dir = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
-    destination = os.environ['HOME']
+    zinc_directory = os.path.dirname(opencmiss.zinc.context.__file__)
+    iron_directory = os.path.dirname(opencmiss.iron.iron.__file__)
+    base_dir = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..'))
+    destination = create_destination_dir()
     pwd = os.getcwd()
     os.chdir(base_dir)
     remove_parent_of_menubar()
     os.chdir(os.path.join(base_dir, 'src', 'opencmiss'))
-    create_softlink_to_zinc(directory)
+    create_softlink_to_zinc(zinc_directory)
+    create_softlink_to_iron(iron_directory)
     os.chdir(os.path.join(base_dir, 'src'))
     execute_py2app_build()
     os.chdir(os.path.join(base_dir, 'src', 'dist'))
-    rename_app()
+    # rename_app()
     mv_app(destination)
     os.chdir(os.path.join(base_dir, 'src'))
     rm_build_dist()
     os.chdir(os.path.join(base_dir, 'src', 'opencmiss'))
-    rm_softlink()
+    rm_softlink_to_zinc()
+    rm_softlink_to_iron()
     os.chdir(base_dir)
     undo_code_change()
     os.chdir(pwd)

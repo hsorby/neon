@@ -8,10 +8,7 @@ License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
-try:
-    from PySide import QtCore, QtGui
-except ImportError:
-    from PyQt4 import QtCore, QtGui
+from PySide import QtCore, QtGui
 
 import math
 
@@ -19,8 +16,8 @@ from opencmiss.zinc.sceneviewer import Sceneviewer, Sceneviewerevent
 from opencmiss.zinc.status import OK as ZINC_OK
 from opencmiss.neon.ui.editors.ui_sceneviewereditorwidget import Ui_SceneviewerEditorWidget
 
-class SceneviewerEditorWidget(QtGui.QWidget):
 
+class SceneviewerEditorWidget(QtGui.QWidget):
     def __init__(self, parent=None):
         '''
         Call the super class init functions
@@ -38,7 +35,7 @@ class SceneviewerEditorWidget(QtGui.QWidget):
         '''
         Get the sceneviewer currently in the editor
         '''
-        return self._sceneviewer       
+        return self._sceneviewer
 
     def setSceneviewer(self, sceneviewer):
         '''
@@ -103,7 +100,7 @@ class SceneviewerEditorWidget(QtGui.QWidget):
         newText = '{:.5g}'.format(value)
         widget.setText(newText)
 
-    def _displayVector(self, widget, values, numberFormat = '{:.5g}'):
+    def _displayVector(self, widget, values, numberFormat='{:.5g}'):
         '''
         Display real vector values in a widget
         '''
@@ -143,7 +140,7 @@ class SceneviewerEditorWidget(QtGui.QWidget):
         Display the current scene viewer diagonal view angle
         '''
         viewAngleRadians = self._sceneviewer.getViewAngle()
-        viewAngleDegrees = viewAngleRadians*180.0/math.pi
+        viewAngleDegrees = viewAngleRadians * 180.0 / math.pi
         self._displayReal(self._ui.view_angle, viewAngleDegrees)
 
     def viewAngleEntered(self):
@@ -151,7 +148,7 @@ class SceneviewerEditorWidget(QtGui.QWidget):
         Set scene viewer diagonal view angle from value in the view angle widget
         '''
         try:
-            viewAngleRadians = float(self._ui.view_angle.text())*math.pi/180.0
+            viewAngleRadians = float(self._ui.view_angle.text()) * math.pi / 180.0
             if ZINC_OK != self._sceneviewer.setViewAngle(viewAngleRadians):
                 raise
         except:
@@ -224,7 +221,7 @@ class SceneviewerEditorWidget(QtGui.QWidget):
         Display the current near clipping plane distance
         '''
         near = self._sceneviewer.getNearClippingPlane()
-        value = int(10001.0*near/self._maximumClippingDistance) - 1
+        value = int(10001.0 * near / self._maximumClippingDistance) - 1
         # don't want signal for my change
         self._ui.near_clipping_slider.blockSignals(True)
         self._ui.near_clipping_slider.setValue(value)
@@ -234,14 +231,14 @@ class SceneviewerEditorWidget(QtGui.QWidget):
         '''
         Set near clipping plane distance from slider
         '''
-        near = (value + 1)*self._maximumClippingDistance/10001.0
+        near = (value + 1) * self._maximumClippingDistance / 10001.0
         self._sceneviewer.setNearClippingPlane(near)
 
     def farClippingDisplay(self):
         '''
         Display the current far clipping plane distance
         '''
-        value = int(10001.0*self._sceneviewer.getFarClippingPlane()/self._maximumClippingDistance) - 1
+        value = int(10001.0 * self._sceneviewer.getFarClippingPlane() / self._maximumClippingDistance) - 1
         self._ui.far_clipping_slider.blockSignals(True)
         self._ui.far_clipping_slider.setValue(value)
         self._ui.far_clipping_slider.blockSignals(False)
@@ -250,7 +247,7 @@ class SceneviewerEditorWidget(QtGui.QWidget):
         '''
         Set far clipping plane distance from slider
         '''
-        far = (value + 1)*self._maximumClippingDistance/10001.0
+        far = (value + 1) * self._maximumClippingDistance / 10001.0
         self._sceneviewer.setFarClippingPlane(far)
 
     def backgroundColourDisplay(self):
@@ -310,7 +307,7 @@ class SceneviewerEditorWidget(QtGui.QWidget):
             self._ui.perturbline_checkbox.setCheckState(QtCore.Qt.Checked)
         else:
             self._ui.perturbline_checkbox.setCheckState(QtCore.Qt.Unchecked)
-            
+
     def perturbLineStateChanged(self, state):
         '''
         Set scene viewer perturb lines value
