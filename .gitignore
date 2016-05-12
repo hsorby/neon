@@ -62,8 +62,9 @@ target/
 .pydevproject
 .settings/
 
-# OS X
-.DS_Store
-
 # PyCharm
 .idea/
+
+# OSX specific
+.DS_Store
+Neon.dmg

@@ -32,8 +32,13 @@ OPTIONS = {
         'CFBundleVersion': "0.1.0",
         'CFBundleShortVersionString': "0.1.0",
         'NSHumanReadableCopyright': u"Copyright 2016, University of Auckland, All Rights Reserved"
-    }
-#    'frameworks': ['/Users/hsor001/work/opencmiss-software/zinc-software/zinc/library-build-make/core/libzinc.r11285M.3.0.1.dylib']
+    },
+    # These paths need to be full paths to the libraries, currently they are not being picked up by py2app.
+   'frameworks': ['release/lib/libzinc.r7af303.3.dylib',
+                  # 'release/lib/libiron.dylib',
+                  # 'release/lib/libiron_c.dylib',
+                  'NEONlung-build/Library/bindings/c/libaether_c.dylib',
+                  ]
 }
 
 setup(
