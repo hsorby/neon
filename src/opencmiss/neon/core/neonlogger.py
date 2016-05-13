@@ -21,7 +21,7 @@ from PySide import QtCore
 
 from opencmiss.zinc.logger import Logger
 
-ENABLE_STD_STREAM_CAPTURE = True
+ENABLE_STD_STREAM_CAPTURE = False
 
 
 class CustomStreamImpl(QtCore.QObject):
