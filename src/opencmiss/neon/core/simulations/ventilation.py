@@ -145,16 +145,11 @@ class Ventilation(LocalSimulation):
                 ls = {}
                 exec(code, gs, ls)
         else:
-            ns = {}
+            _globs_ = {}
+            _locs_ = {}
+            _code_ = code
             with stdout_capture() as s:
-                exec code in ns
-        # print(gs)
-        # print(ls)
-        # p = Popen([self._executable], cwd=self._dir_handles['root'], stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
-        # q = Queue()
-        # t = Thread(target=enqueue_output, args=(p.stdout, q))
-        # t.daemon = True  # thread dies with the program
-        # t.start()
+                exec("""exec _code_ in _globs_, _locs_""")
 
         return s
 

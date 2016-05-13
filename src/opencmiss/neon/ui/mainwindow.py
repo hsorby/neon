@@ -597,9 +597,10 @@ class MainWindow(QtGui.QMainWindow):
             # return
             # Alternative behaviour is to require user to select project type
             self._newTriggered()
-            return
-        else:
-            project = document.getProject()
+            self._doProjectCheck()
+
+        document = self._model.getDocument()
+        project = document.getProject()
         if project is None:
             self._newTriggered()
 
@@ -616,6 +617,7 @@ class MainWindow(QtGui.QMainWindow):
             project = project_model.getProject(index)
             if project:
                 self._model.new(project)
+                self._onDocumentChanged()
         else:
             # print('Not accepted')
             pass
