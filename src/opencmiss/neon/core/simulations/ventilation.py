@@ -14,15 +14,17 @@
    limitations under the License.
 '''
 import sys
+import shutil
+import importlib
 import os.path
+from io import StringIO
 from subprocess import PIPE, Popen
-from threading  import Thread
+from threading import Thread
 from tempfile import NamedTemporaryFile, mkdtemp
 
 from opencmiss.neon.core.simulations.local import LocalSimulation
 from opencmiss.neon.core.serializers.identifiervalue import IdentifierValue
 from opencmiss.neon.settings.mainsettings import EXTERNAL_DATA_DIR, PYTHON3
-from opencmiss.neon.ui.misc.utils import stdout_capture
 
 try:
     from Queue import Queue
@@ -44,10 +46,11 @@ class Ventilation(LocalSimulation):
         super(Ventilation, self).__init__()
         self.setName('Ventilation Simulation')
         self.setSerializer(IdentifierValue())
-        self._file_handles = {}
-        self._dir_handles = {}
+        self._file_locations = {}
+        self._dir_locations = {}
         self._output_filenames = {}
         self._initial_wd = None
+        self._module = None
 
     def getOutputFilenames(self):
         return self._output_filenames
@@ -76,17 +79,17 @@ class Ventilation(LocalSimulation):
 
         terminal_file = output_filenames['terminal_exnode']
 
-        self._dir_handles['root'] = mkdtemp(prefix='neon_')
-        param_dir = os.path.join(self._dir_handles['root'], 'Parameters')
-        self._dir_handles['para'] = param_dir
+        self._dir_locations['root'] = mkdtemp(prefix='neon_')
+        param_dir = os.path.join(self._dir_locations['root'], 'Parameters')
+        self._dir_locations['para'] = param_dir
         os.mkdir(param_dir)
 
         geometry_flow = {}
         geometry_flow['exnode'] = "'{0}'".format(terminal_file)
         geometry_flow['flowexelem'] = "'{0}'".format(output_filenames['ventilation_exelem'])
         geometry_flow['flowradiusexelem'] = "'{0}'".format(output_filenames['radius_exelem'])
-        self._file_handles['geo_main'] = os.path.join(self._dir_handles['para'], 'geometry_evaluate_flow.txt')
-        with open(self._file_handles['geo_main'], 'w') as f:
+        self._file_locations['geo_main'] = os.path.join(self._dir_locations['para'], 'geometry_evaluate_flow.txt')
+        with open(self._file_locations['geo_main'], 'w') as f:
             string = self._serializer.serialize(geometry_flow)
             f.write(string)
 
@@ -118,49 +121,74 @@ class Ventilation(LocalSimulation):
         geometry_main['airway_exnode'] = "'{0}'".format(output_filenames['tree_exnode'])
         geometry_main['airway_exelem'] = "'{0}'".format(output_filenames['tree_exelem'])
 
-        self._file_handles['geo_flow'] = os.path.join(self._dir_handles['para'], 'geometry_main.txt')
-        with open(self._file_handles['geo_flow'], 'w') as f:
+        self._file_locations['geo_flow'] = os.path.join(self._dir_locations['para'], 'geometry_main.txt')
+        with open(self._file_locations['geo_flow'], 'w') as f:
             string = self._serializer.serialize(geometry_main)
             f.write(string)
 
-        self._file_handles['par_main'] = os.path.join(self._dir_handles['para'], 'params_main.txt')
-        with open(self._file_handles['par_main'], 'w') as f:
+        self._file_locations['par_main'] = os.path.join(self._dir_locations['para'], 'params_main.txt')
+        with open(self._file_locations['par_main'], 'w') as f:
             string = self._serializer.serialize(self._parameters['main_parameters'])
             f.write(string)
 
-        self._file_handles['par_flow'] = os.path.join(self._dir_handles['para'], 'params_evaluate_flow.txt')
-        with open(self._file_handles['par_flow'], 'w') as f:
+        self._file_locations['par_flow'] = os.path.join(self._dir_locations['para'], 'params_evaluate_flow.txt')
+        with open(self._file_locations['par_flow'], 'w') as f:
             string = self._serializer.serialize(self._parameters['flow_parameters'])
             f.write(string)
+
+        self._file_locations['script'] = os.path.join(self._dir_locations['root'], 'ventilation_script.py')
+        with open(self._file_locations['script'], 'w') as f:
+            f.write(self._parameters['script'])
 
         self._initial_wd = os.getcwd()
 
     def execute(self):
-        script = self._parameters['script']
-        os.chdir(self._dir_handles['root'])
-        code = compile(script, "ventilation_script.py", 'exec')
-        if PYTHON3:
-            with stdout_capture() as s:
-                gs = {}
-                ls = {}
-                exec(code, gs, ls)
+        script = self._file_locations['script']
+        base_script = os.path.basename(script)
+        module_name = os.path.splitext(base_script)[0]
+        os.chdir(self._dir_locations['root'])
+        if self._dir_locations['root'] not in sys.path:
+            sys.path.append(self._dir_locations['root'])
+
+        stdout = None
+        stderr = None
+        old = sys.stdout
+        olderr = sys.stderr
+        if stdout is None:
+            stdout = StringIO()
+        if stderr is None:
+            stderr = StringIO()
+        sys.stdout = stdout
+        sys.stderr = stderr
+        importlib.invalidate_caches()
+        if self._module is None:
+            self._module = importlib.import_module(module_name)
         else:
-            _globs_ = {}
-            _locs_ = {}
-            _code_ = code
-            with stdout_capture() as s:
-                exec("""exec _code_ in _globs_, _locs_""")
+            importlib.reload(self._module)
+        sys.stdout = old
+        sys.stderr = olderr
+        s = stdout, stderr
+        if self._dir_locations['root'] in sys.path:
+            index = sys.path.index(self._dir_locations['root'])
+            sys.path.pop(index)
 
         return s
 
     def cleanup(self):
         os.chdir(self._initial_wd)
-        os.remove(self._file_handles['geo_main'])
-        os.remove(self._file_handles['geo_flow'])
-        os.remove(self._file_handles['par_main'])
-        os.remove(self._file_handles['par_flow'])
-        os.rmdir(self._dir_handles['para'])
-        os.rmdir(self._dir_handles['root'])
+        shutil.rmtree(self._dir_locations['root'])
 
     def validate(self):
         return True
+
+
+from threading import Thread
+
+
+class SimulationThread(Thread):
+
+    def __init__(self, module, path):
+        super(SimulationThread, self).__init__(self)
+        self._module = module
+        self._path = path
+
