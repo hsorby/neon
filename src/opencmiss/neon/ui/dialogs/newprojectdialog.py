@@ -18,10 +18,6 @@ from PySide import QtCore, QtGui
 from opencmiss.neon.ui.dialogs.ui_newprojectdialog import Ui_NewProjectDialog
 
 
-BIOMENG321 = False
-VENTILATION = True
-
-
 class NewProjectDialog(QtGui.QDialog):
 
     openClicked = QtCore.Signal()
@@ -44,12 +40,7 @@ class NewProjectDialog(QtGui.QDialog):
         self._ui.toolButtonRecent.clicked.connect(self._recentClicked)
         self._ui.listViewProjects.doubleClicked.connect(self._itemDoubleClicked)
         self._ui.pushButtonOpen.clicked.connect(self._openClicked)
-        if BIOMENG321:
-            self._proxy_model.setFilterFixedString('Biomeng')
-        elif VENTILATION:
-            self._proxy_model.setFilterFixedString('ventilation')
-        else:
-            self._ui.lineEditFilter.textChanged.connect(self._proxy_model.setFilterFixedString)
+        self._ui.lineEditFilter.textChanged.connect(self._proxy_model.setFilterFixedString)
 
     def _setupProjects(self, model):
         self._proxy_model.setSourceModel(model)
@@ -69,7 +60,7 @@ class NewProjectDialog(QtGui.QDialog):
         self._ui.toolButtonRecent.showMenu()
 
     def _openClicked(self):
-        self.accept()
+        self.reject()
         self.openClicked.emit()
 
     def _recentActionTriggered(self):
@@ -81,3 +72,4 @@ class NewProjectDialog(QtGui.QDialog):
         indexes = item_selection.indexes()
         if len(indexes):
             return indexes[0]
+

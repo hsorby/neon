@@ -13,6 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 '''
+import copy
+
 from PySide import QtCore
 
 
@@ -62,7 +64,8 @@ class ProjectModel(QtCore.QAbstractListModel):
     def getProject(self, index):
         if not index.isValid():
             return None
-        return self._projects[index.row()]
+
+        return copy.deepcopy(self._projects[index.row()])
 
     def getProjectName(self, index):
         if not index.isValid():

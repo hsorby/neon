@@ -29,8 +29,8 @@ OPTIONS = {
         'CFBundleDisplayName': 'Neon',
         'CFBundleGetInfoString': "Visual multiscale-modeling environment",
         'CFBundleIdentifier': "org.opencmiss.osx.neon",
-        'CFBundleVersion': "0.1.0",
-        'CFBundleShortVersionString': "0.1.0",
+        'CFBundleVersion': "0.1.1",
+        'CFBundleShortVersionString': "0.1.1",
         'NSHumanReadableCopyright': u"Copyright 2016, University of Auckland, All Rights Reserved"
     },
     # These paths need to be full paths to the libraries, currently they are not being picked up by py2app.

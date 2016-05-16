@@ -15,8 +15,8 @@
 '''
 
 active_project_names = [
-    'Generic',
+    # 'Generic',
     'Ventilation',
-    'Biomeng321Lab1',
-    'Biomeng321Lab2',
+    # 'Biomeng321Lab1',
+    # 'Biomeng321Lab2',
 ]
