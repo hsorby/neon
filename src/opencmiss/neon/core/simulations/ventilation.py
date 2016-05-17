@@ -160,11 +160,15 @@ class Ventilation(LocalSimulation):
             stderr = StringIO()
         sys.stdout = stdout
         sys.stderr = stderr
-        importlib.invalidate_caches()
+        if hasattr(importlib, 'invalidate_caches'):
+            importlib.invalidate_caches()
         if self._module is None:
             self._module = importlib.import_module(module_name)
         else:
-            importlib.reload(self._module)
+            if hasattr(importlib, 'reload'):
+                importlib.reload(self._module)
+            else:
+                reload(self._module)
         sys.stdout = old
         sys.stderr = olderr
         s = stdout, stderr
