@@ -53,7 +53,7 @@ both of these options can be seen in :numref:`first_time_problem_change_to_simul
 .. figure::  images/first_time_problem_change_to_simulation.png
    :align:   center
 
-   The :guilabel:`Problem` screen with the :guilabel:`Problem Editor` visible.
+   Different ways the user can change to the :guilabel:`Simulation` screen.
 
 We should note here that when we :guilabel:`Run` a problem we will also transition to the :guilabel:`Simulation` screen once the simulation commences.
 

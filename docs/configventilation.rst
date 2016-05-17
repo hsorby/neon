@@ -5,9 +5,6 @@
 Configuring Ventilation
 =======================
 
-.. note:: This version of the software cannot run a ventilation problem and then run another ventilaion problem again.  There is a memory issue with one of the required libraries which is currently being investigated (and hopefully solved).  This means unfortunately that to run another problem, possibly with changed parameters, you will need to restart the application.
-
-----------------
 Basic Parameters
 ----------------
 
@@ -19,7 +16,7 @@ The small model should only take a matter of seconds to run, whereas the large t
 Main Parameters
 ---------------
 
-The main parameters available on the :guilabel:`Parameters`	tab control the solver settings.
+The main parameters available on the :guilabel:`Parameters` tab control the solver settings.
 
 ---------------
 Flow Parameters
