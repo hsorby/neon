@@ -48,6 +48,19 @@ def which(name, flags=os.X_OK):
                 result.append(pext)
     return result
 
+
+# Add zinc to the path?
+import opencmiss.zinc.context
+location = os.path.dirname(opencmiss.zinc.context.__file__)
+sys.path.append(location)
+
+# Add aether to the path?
+import aether
+sys.path.append(os.path.dirname(aether.__file__))
+
+# MSVC 14 dll
+msvc_14 = which('msvcp140.dll')
+
 # Assuming that we are using the mkl libraries from intel
 mkl_core = which('mkl_core.dll')
 mkl_avx = which('mkl_avx.dll')
@@ -55,7 +68,7 @@ mkl_def = which('mkl_def.dll')
 
 # Assuming that we are using mpich2, what test can we perform to confirm this?
 mpich2nemesis = which('mpich2nemesis.dll')
-additional_dlls = [dll[0] for dll in [mkl_core, mkl_avx, mkl_def, mpich2nemesis] if dll]
+additional_dlls = [dll[0] for dll in [mkl_core, mkl_avx, mkl_def, mpich2nemesis, msvc_14] if dll]
 
 #APP = ['opencmiss/neon/neon.py']
 APP = [
@@ -73,15 +86,17 @@ PACKAGES = find_packages()
 PACKAGES.extend(['aether'])
 OPTIONS = {'py2exe': {
         'packages': PACKAGES,
-        #'skip_archive': True,
+        # 'compressed': False,
+        # 'skip_archive': True,
         #'bundle_files': 2, # Unfortunately we cannot use anything other than 3 at this point in time
     }
 }
 
 
 setup(
-    console=APP,
+    windows=APP,
     options=OPTIONS,
     data_files=DATA_FILES,
+    zipfile=None,
 )
 
