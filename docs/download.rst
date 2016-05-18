@@ -13,7 +13,7 @@ A dmg and zip file are available from https://github.com/hsorby/neon/releases.  
 Windows
 =======
 
-No binary is currently available for download.
+An executable installer and .zip file are available from https://github.com/hsorby/neon/releases.  If you have administrator privileges then download the executable installer, otherwise download the .zip file for windows.
 
 GNU/Linux
 =========

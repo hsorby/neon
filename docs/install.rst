@@ -28,7 +28,15 @@ To install Neon using the Neon.zip file, double click the .zip file to extract i
 Windows
 =======
 
-No installation instructions are currently available for this platform.
+.EXE
+----
+
+To install Neon using the executable installer, double click on the .exe to start the installation wizard.  Follow the on-screen instructions to install the application.
+
+.ZIP
+----
+
+To install Neon using the .zip file, double click the .zip file to open a file explorer window.  Drag, copy, or cut the *dist* directory out of the zip file and onto the *Desktop* (or somewhere similar).
 
 GNU/Linux
 =========
