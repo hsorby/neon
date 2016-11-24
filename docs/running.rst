@@ -14,4 +14,12 @@ Windows
 
 If *Neon* has been installed from the executable installer then *Neon* is available from the :guilabel:`Start Menu`.  If *Neon* has been installed from the .zip file then, using *Windows Explorer*, the application can be launched by double clicking on the *Neon.exe* application inside the *dist* directory.
 
- .. note:: If the application does not start this could be because a required update is missing from your system.  The required update is KB2999226, if your system does not have this update you will need to download it from *Microsoft* and install it.
+ .. note:: If the application does not start this could be because a required update is missing from your system (see :numref:`missing_dll_windows`).  The required update is KB2999226, if your system does not have this update you will need to download it from *Microsoft* and install it.
+
+   .. _missing_dll_windows:
+   .. figure::  images/missing_dll_windows.png
+      :align:   center
+
+      System error shown when update KB2999226 has not been installed.
+   
+
