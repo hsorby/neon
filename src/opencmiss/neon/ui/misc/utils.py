@@ -18,7 +18,7 @@ from functools import wraps
 from PySide import QtCore, QtGui
 import sys
 from io import StringIO
-import contextlib
+from contextlib import contextmanager
 
 
 
@@ -39,7 +39,7 @@ def set_wait_cursor(f):
     return do_wait_cursor
 
 
-@contextlib.contextmanager
+@contextmanager
 def stdout_capture(stdout=None, stderr=None):
     old = sys.stdout
     olderr = sys.stderr

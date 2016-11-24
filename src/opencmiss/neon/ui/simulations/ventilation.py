@@ -13,8 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 '''
-from PySide import QtGui
-
 from opencmiss.neon.ui.simulations.base import BaseSimulationView
 from opencmiss.neon.core.simulations.ventilation import Ventilation as VentilationSimulation
 from opencmiss.neon.ui.misc.utils import set_wait_cursor
@@ -51,9 +49,18 @@ class Ventilation(BaseSimulationView):
 
     @set_wait_cursor
     def execute(self):
-        s, r = self._simulation.execute()
-        self._ui.plainTextEdit.setPlainText(s.getvalue())
-        self._ui.plainTextEdit.appendPlainText(r.getvalue())
+        self._ui.plainTextEdit.clear()
+        p, q = self._simulation.execute()
+        while p.is_alive():
+            try:
+                data = q.get_nowait()
+                self._ui.plainTextEdit.appendPlainText(data)
+            except Empty:
+                pass
+# /                print('exception!!!!!')
+        # s, r = self._simulation.execute()
+        # self._ui.plainTextEdit.setPlainText(s.getvalue())
+        # self._ui.plainTextEdit.appendPlainText(r.getvalue())
 
     def cleanup(self):
         self._ui.plainTextEdit.appendPlainText('')

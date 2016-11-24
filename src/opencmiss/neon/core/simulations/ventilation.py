@@ -18,26 +18,58 @@ import shutil
 import importlib
 import os.path
 from io import StringIO
-from subprocess import PIPE, Popen
+# from subprocess import PIPE, Popen
 from threading import Thread
 from tempfile import NamedTemporaryFile, mkdtemp
 
 from opencmiss.neon.core.simulations.local import LocalSimulation
 from opencmiss.neon.core.serializers.identifiervalue import IdentifierValue
 from opencmiss.neon.settings.mainsettings import EXTERNAL_DATA_DIR, PYTHON3
-
-try:
-    from Queue import Queue
-except ImportError:
-    from queue import Queue  # python 3.x
+from multiprocessing import Process, Queue
+from contextlib import contextmanager
+# try:
+#     from Queue import Queue
+# except ImportError:
+#     from queue import Queue  # python 3.x
 
 ON_POSIX = 'posix' in sys.builtin_module_names
+
+
+from StringIO import StringIO
+
+
+class MyStringIO(StringIO):
+
+    def __init__(self, queue, *args, **kwargs):
+        StringIO.__init__(self, *args, **kwargs)
+        self.queue = queue
+
+    def write(self, s):
+
+
+
+
+
+        self.queue.put(s)
+
+    def flush(self):
+        self.queue.put(self.getvalue())
+        self.truncate(0)
 
 
 def enqueue_output(out, queue):
     for line in iter(out.readline, b''):
         queue.put(line)
     out.close()
+
+
+@contextmanager
+def std_redirector(stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr):
+    tmp_fds = stdin, stdout, stderr
+    orig_fds = sys.stdin, sys.stdout, sys.stderr
+    sys.stdin, sys.stdout, sys.stderr = tmp_fds
+    yield
+    sys.stdin, sys.stdout, sys.stderr = orig_fds
 
 
 class Ventilation(LocalSimulation):
@@ -150,33 +182,37 @@ class Ventilation(LocalSimulation):
         if self._dir_locations['root'] not in sys.path:
             sys.path.append(self._dir_locations['root'])
 
-        stdout = None
-        stderr = None
-        old = sys.stdout
-        olderr = sys.stderr
-        if stdout is None:
-            stdout = StringIO()
-        if stderr is None:
-            stderr = StringIO()
-        sys.stdout = stdout
-        sys.stderr = stderr
-        if hasattr(importlib, 'invalidate_caches'):
-            importlib.invalidate_caches()
-        if self._module is None:
-            self._module = importlib.import_module(module_name)
-        else:
-            if hasattr(importlib, 'reload'):
-                importlib.reload(self._module)
-            else:
-                reload(self._module)
-        sys.stdout = old
-        sys.stderr = olderr
-        s = stdout, stderr
+        q = Queue()
+        p = Process(target=simulate_ventilation, args=(module_name, q))
+        p.start()
+
+        # stdout = None
+        # stderr = None
+        # old = sys.stdout
+        # olderr = sys.stderr
+        # if stdout is None:
+        #     stdout = StringIO()
+        # if stderr is None:
+        #     stderr = StringIO()
+        # sys.stdout = stdout
+        # sys.stderr = stderr
+        # if hasattr(importlib, 'invalidate_caches'):
+        #     importlib.invalidate_caches()
+        # if self._module is None:
+        #     self._module = importlib.import_module(module_name)
+        # else:
+        #     if hasattr(importlib, 'reload'):
+        #         importlib.reload(self._module)
+        #     else:
+        #         reload(self._module)
+        # sys.stdout = old
+        # sys.stderr = olderr
+        # s = stdout, stderr
         if self._dir_locations['root'] in sys.path:
             index = sys.path.index(self._dir_locations['root'])
             sys.path.pop(index)
 
-        return s
+        return p, q
 
     def cleanup(self):
         os.chdir(self._initial_wd)
@@ -186,13 +222,14 @@ class Ventilation(LocalSimulation):
         return True
 
 
-from threading import Thread
+def simulate_ventilation(module_name, q):
+    print('something is happening')
+    q.put('something in the queue')
+    q.put('module name:' + module_name)
+    if hasattr(importlib, 'invalidate_caches'):
+        importlib.invalidate_caches()
 
-
-class SimulationThread(Thread):
-
-    def __init__(self, module, path):
-        super(SimulationThread, self).__init__(self)
-        self._module = module
-        self._path = path
-
+    output = MyStringIO(q)
+    with std_redirector(stdout=output, stderr=output):
+        print('something is captured?????')
+        importlib.import_module(module_name)
