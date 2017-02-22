@@ -76,6 +76,8 @@ class Biomeng321Lab1(BaseSimulationView):
             del self._zinc_context
             self._zinc_context = None
 
+        # Hide the answers
+        self._ui.splitter.setSizes([1000, 0])
         self._zinc_context = Context('Lab1')
         materialmodule = self._zinc_context.getMaterialmodule()
         materialmodule.defineStandardMaterials()

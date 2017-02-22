@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'res\designer\problems\biomeng321lab2.ui'
 #
-# Created: Sat Mar 05 02:04:18 2016
+# Created: Fri Feb 26 08:17:00 2016
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,13 +17,8 @@ class Ui_Biomeng321Lab2(object):
         self.gridLayout.setObjectName("gridLayout")
         self.groupBox = QtGui.QGroupBox(Biomeng321Lab2)
         self.groupBox.setObjectName("groupBox")
-        self.verticalLayout = QtGui.QVBoxLayout(self.groupBox)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_17 = QtGui.QLabel(self.groupBox)
-        self.label_17.setObjectName("label_17")
-        self.horizontalLayout.addWidget(self.label_17)
+        self.gridLayout_2 = QtGui.QGridLayout(self.groupBox)
+        self.gridLayout_2.setObjectName("gridLayout_2")
         self.comboBoxBoundaryConditions = QtGui.QComboBox(self.groupBox)
         self.comboBoxBoundaryConditions.setObjectName("comboBoxBoundaryConditions")
         self.comboBoxBoundaryConditions.addItem("")
@@ -31,12 +26,12 @@ class Ui_Biomeng321Lab2(object):
         self.comboBoxBoundaryConditions.addItem("")
         self.comboBoxBoundaryConditions.addItem("")
         self.comboBoxBoundaryConditions.addItem("")
-        self.horizontalLayout.addWidget(self.comboBoxBoundaryConditions)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.verticalLayout.addLayout(self.horizontalLayout)
-        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem1)
+        self.gridLayout_2.addWidget(self.comboBoxBoundaryConditions, 0, 0, 1, 1)
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem, 1, 0, 1, 1)
+        self.label_17 = QtGui.QLabel(self.groupBox)
+        self.label_17.setObjectName("label_17")
+        self.gridLayout_2.addWidget(self.label_17, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
 
         self.retranslateUi(Biomeng321Lab2)
@@ -44,11 +39,11 @@ class Ui_Biomeng321Lab2(object):
 
     def retranslateUi(self, Biomeng321Lab2):
         Biomeng321Lab2.setWindowTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Biomeng321 Lab2", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Parameters", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_17.setText(QtGui.QApplication.translate("Biomeng321Lab2", "Boundary conditions:", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("Biomeng321Lab2", "Model Selection", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBoxBoundaryConditions.setItemText(0, QtGui.QApplication.translate("Biomeng321Lab2", "Type 1", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBoxBoundaryConditions.setItemText(1, QtGui.QApplication.translate("Biomeng321Lab2", "Type 2", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBoxBoundaryConditions.setItemText(2, QtGui.QApplication.translate("Biomeng321Lab2", "Type 3", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBoxBoundaryConditions.setItemText(3, QtGui.QApplication.translate("Biomeng321Lab2", "Type 4", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBoxBoundaryConditions.setItemText(4, QtGui.QApplication.translate("Biomeng321Lab2", "Type 5", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_17.setText(QtGui.QApplication.translate("Biomeng321Lab2", "", None, QtGui.QApplication.UnicodeUTF8))
 

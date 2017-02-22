@@ -292,14 +292,14 @@ default_visualisation = {
               1.8
             ],
             "Font": "default",
-            "Glyph": "axes_xyz",
+            "Glyph": "axes_x1x2x3",
             "GlyphOffset": [
               0,
               0,
               0
             ],
             "GlyphRepeatMode": "NONE",
-            "GlyphShapeType": "AXES_XYZ",
+            "GlyphShapeType": "AXES_X1X2X3",
             "LabelOffset": [
               0,
               0,

@@ -250,7 +250,7 @@ class MainWindow(QtGui.QMainWindow):
         settings.beginGroup('MainWindow')
         settings.setValue('location', self._location)
         settings.setValue('geometry', self.saveGeometry())
-        settings.setValue('current_view', self._ui.viewStackedWidget.currentIndex())
+        settings.setValue('current_view', 0)  # self._ui.viewStackedWidget.currentIndex())
 
         settings.beginWriteArray('recents')
         recents = self._model.getRecents()

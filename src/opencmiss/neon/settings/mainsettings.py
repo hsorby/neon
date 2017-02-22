@@ -21,8 +21,9 @@ import os.path
 
 VERSION_MAJOR = 0
 VERSION_MINOR = 2
-VERSION_PATCH = 0
+VERSION_PATCH = 2
 VERSION_STRING = str(VERSION_MAJOR) + "." + str(VERSION_MINOR) + "." + str(VERSION_PATCH)
+VERSION_LIST = [VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH]
 
 APPLICATION_NAME = 'Neon'
 ORGANISATION_NAME = 'OpenCMISS'
@@ -31,7 +32,10 @@ ORGANISATION_DOMAIN = 'opencmiss.org'
 FLOAT_STRING_FORMAT = '{:.5g}'
 
 EXTERNAL_BINARIES_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'bin'))
-EXTERNAL_DATA_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'data'))
+if hasattr(sys, 'frozen') and sys.frozen == 'macosx_app':
+    EXTERNAL_DATA_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'data'))
+else:
+    EXTERNAL_DATA_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'data'))
 
 if sys.version_info > (3, 0):
     PYTHON3 = True
