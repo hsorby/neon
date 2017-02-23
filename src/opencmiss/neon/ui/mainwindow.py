@@ -566,10 +566,12 @@ class MainWindow(QtGui.QMainWindow):
             #     return
             # Alternative behaviour is to require user to select project type
             self._newTriggered()
-        else:
-            project = document.getProject()
-        # if project is None:
-        #     self._newTriggered()
+            self._doProjectCheck()
+
+        document = self._model.getDocument()
+        project = document.getProject()
+        if project is None:
+            self._newTriggered()
 
     def _newTriggered(self):
         project_model = self._model.getProjectModel()
@@ -584,10 +586,10 @@ class MainWindow(QtGui.QMainWindow):
             project = project_model.getProject(index)
             if project:
                 self._model.new(project)
+                self._onDocumentChanged()
         else:
             # print('Not accepted')
             pass
-#         self._onNewDocument()
 
     def _openModel(self, filename):
         self._location = os.path.dirname(filename)

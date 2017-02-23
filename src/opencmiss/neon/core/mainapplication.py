@@ -81,9 +81,15 @@ class MainApplication(QtCore.QObject):
         # create a blank document
         if self._document is not None:
             self._document.freeVisualisationContents()
+            self._document.freeProject()
 
         self._document = NeonDocument()
-        self._document.setProject(project)
+        if project:
+            self._document.setProject(project)
+        else:
+            defaultProject = self._project_model.getDefaultProject()
+            self._document.setProject(defaultProject)
+
         self._document.initialiseVisualisationContents()
 
         self.documentChanged.emit()

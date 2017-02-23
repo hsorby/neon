@@ -1,4 +1,4 @@
-'''
+"""
    Copyright 2015 University of Auckland
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,9 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-'''
+"""
+import copy
+
 from PySide import QtCore
 
 
@@ -62,7 +64,7 @@ class ProjectModel(QtCore.QAbstractListModel):
     def getProject(self, index):
         if not index.isValid():
             return None
-        return self._projects[index.row()]
+        return copy.deepcopy(self._projects[index.row()])
 
     def getProjectName(self, index):
         if not index.isValid():
