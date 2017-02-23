@@ -46,7 +46,7 @@ class Biomeng321Lab2(BaseProblem):
 
     def deserialize(self, string):
         d = json.loads(string)
-        self._boundary_condition = d['boundary_condition'] if 'boundary_condition' in d else BOUNDARY_CONDITIONS[0]
+        self._boundary_condition = d['boundary_condition'] if 'boundary_condition' in d and d['boundary_condition'] else BOUNDARY_CONDITIONS[0]
 
     def validate(self):
         return True

@@ -148,7 +148,7 @@ class MainWindow(QtGui.QMainWindow):
         self.dockWidgetContentsProblemEditor = ProblemEditorWidget()
         self.dockWidgetContentsProblemEditor.setObjectName("dockWidgetContentsProblemEditor")
         self.dockWidgetProblemEditor.setWidget(self.dockWidgetContentsProblemEditor)
-        self.dockWidgetProblemEditor.setHidden(True)
+        self.dockWidgetProblemEditor.setHidden(False)
 
         self.dockWidgetSimulationEditor = QtGui.QDockWidget(self)
         self.dockWidgetSimulationEditor.setWindowTitle('Simulation Editor')
@@ -287,7 +287,7 @@ class MainWindow(QtGui.QMainWindow):
             settings.setArrayIndex(i)
             self._addRecent(settings.value('item'))
         settings.endArray()
-        currentViewIndex = settings.value('current_view', '0')
+        # currentViewIndex = settings.value('current_view', '0')
         settings.endGroup()
 
         settings.beginGroup('views')
@@ -296,7 +296,7 @@ class MainWindow(QtGui.QMainWindow):
             self._view_states[key] = state
         settings.endGroup()
 
-        self._setCurrentView(currentViewIndex)
+        self._setCurrentView(0)  # Always set to problem view
         self._postChangeView()
 
         settings.beginGroup('SnapshotDialog')
