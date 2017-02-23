@@ -127,6 +127,7 @@ class MainWindow(QtGui.QMainWindow):
     def _updateUi(self):
         modified = self._model.isModified()
         self._ui.action_Save.setEnabled(modified)
+        self._ui.action_Save_As.setEnabled(modified)
         recents = self._model.getRecents()
         self._ui.action_Clear.setEnabled(len(recents))
 
@@ -301,7 +302,6 @@ class MainWindow(QtGui.QMainWindow):
         settings.endGroup()
 
         self._setCurrentView(0)  # Always set to problem view
-        self._postChangeView()
 
         settings.beginGroup('PreferencesDialog')
         self._preferences_dialog.deserialize(settings.value('state', ''))
@@ -486,6 +486,7 @@ class MainWindow(QtGui.QMainWindow):
         self._problem_view.setCurrentIndex(index.row())
         self._simulation_view.setCurrentIndex(index.row())
         self._problem_view.setProblem(project.getProblem())
+        self._setCurrentView(0)  # Always set to problem view
 
     def _regionSelected(self, region):
         self.dockWidgetContentsModelSourcesEditor.setRegion(region)

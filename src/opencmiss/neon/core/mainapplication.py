@@ -77,7 +77,7 @@ class MainApplication(QtCore.QObject):
     def getLocation(self):
         return self._location
 
-    def new(self, project):
+    def new(self, project=None):
         # create a blank document
         if self._document is not None:
             self._document.freeVisualisationContents()
