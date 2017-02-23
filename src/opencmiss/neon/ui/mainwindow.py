@@ -266,6 +266,10 @@ class MainWindow(QtGui.QMainWindow):
             settings.setValue(key.getName(), self._view_states[key])
         settings.endGroup()
 
+        settings.beginGroup('PreferencesDialog')
+        settings.setValue('state', self._preferences_dialog.serialize())
+        settings.endGroup()
+
         settings.beginGroup('SnapshotDialog')
         settings.setValue('state', self._snapshot_dialog.serialize())
         settings.endGroup()
@@ -298,6 +302,10 @@ class MainWindow(QtGui.QMainWindow):
 
         self._setCurrentView(0)  # Always set to problem view
         self._postChangeView()
+
+        settings.beginGroup('PreferencesDialog')
+        self._preferences_dialog.deserialize(settings.value('state', ''))
+        settings.endGroup()
 
         settings.beginGroup('SnapshotDialog')
         self._snapshot_dialog.deserialize(settings.value('state', ''))
@@ -396,6 +404,7 @@ class MainWindow(QtGui.QMainWindow):
             action_view.setActionGroup(action_group)
             action_view.triggered.connect(self._viewTriggered)
             self._ui.menu_View.addAction(action_view)
+            self._ui.toolBarView.addAction(action_view)
 
         self._ui.menu_View.addSeparator()
 
