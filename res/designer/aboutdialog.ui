@@ -24,7 +24,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="labelTitle">
         <property name="font">
          <font>
           <family>Zekton</family>
@@ -40,14 +40,17 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="labelDescritpion">
         <property name="text">
-         <string>Visual editing environment for OpenCMISS [http://opencmiss.org]].</string>
+         <string>Visual editing environment for OpenCMISS [http://opencmiss.org].</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="openExternalLinks">
          <bool>true</bool>
         </property>
        </widget>

@@ -15,6 +15,7 @@ Contents:
    
    download
    install
+   running
    firsttime
    configventilation
 

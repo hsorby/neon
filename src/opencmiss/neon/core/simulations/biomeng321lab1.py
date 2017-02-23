@@ -17,7 +17,7 @@ import os
 import numpy
 from tempfile import NamedTemporaryFile
 
-from opencmiss.iron import iron
+# from opencmiss.iron import iron
 from opencmiss.neon.core.simulations.local import LocalSimulation
 
 

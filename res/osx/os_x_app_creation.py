@@ -23,6 +23,11 @@ def remove_parent_of_menubar():
         f.truncate()
 
 
+def remove_opencmiss_namespace():
+    with open('__init__.py', 'w') as f:
+        pass
+
+
 def create_softlink_to_zinc(directory):
     subprocess.call(['ln', '-s', directory, 'zinc'])
 
@@ -66,6 +71,11 @@ def rm_softlink_to_iron():
     os.remove('iron')
 
 
+def redo_opencmiss_namespace():
+    with open('__init__.py', 'w') as f:
+        f.write('\n# OpenCMISS Python package initialisation file.\nfrom pkgutil import extend_path\n__path__ = extend_path(__path__, __name__)\n')
+
+
 def undo_code_change():
     subprocess.call(['git', 'co', '--', MAIN_WINDOW_UI_FILE])
 
@@ -82,6 +92,7 @@ def main():
     os.chdir(base_dir)
     remove_parent_of_menubar()
     os.chdir(os.path.join(base_dir, 'src', 'opencmiss'))
+    remove_opencmiss_namespace()
     create_softlink_to_zinc(zinc_directory)
     create_softlink_to_iron(iron_directory)
     os.chdir(os.path.join(base_dir, 'src'))
@@ -94,6 +105,7 @@ def main():
     os.chdir(os.path.join(base_dir, 'src', 'opencmiss'))
     rm_softlink_to_zinc()
     rm_softlink_to_iron()
+    redo_opencmiss_namespace()
     os.chdir(base_dir)
     undo_code_change()
     os.chdir(pwd)

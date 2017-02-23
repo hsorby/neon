@@ -185,7 +185,7 @@ class MainWindow(QtGui.QMainWindow):
         self.dockWidgetContentsSceneEditor.setObjectName("dockWidgetContentsSceneEditor")
         self.dockWidgetSceneEditor.setWidget(self.dockWidgetContentsSceneEditor)
         self.dockWidgetSceneEditor.setHidden(True)
-        
+
         self.dockWidgetSceneviewerEditor = QtGui.QDockWidget(self)
         self.dockWidgetSceneviewerEditor.setWindowTitle('Sceneviewer Editor')
         self.dockWidgetSceneviewerEditor.setObjectName("dockWidgetSceneviewerEditor")
@@ -220,7 +220,7 @@ class MainWindow(QtGui.QMainWindow):
         self.dockWidgetContentsTimeEditor.setObjectName("dockWidgetContentsTimeEditor")
         self.dockWidgetTimeEditor.setWidget(self.dockWidgetContentsTimeEditor)
         self.dockWidgetTimeEditor.setHidden(True)
-        
+
         self.dockWidgetFieldEditor = QtGui.QDockWidget(self)
         self.dockWidgetFieldEditor.setWindowTitle('Field Editor')
         self.dockWidgetFieldEditor.setObjectName("dockWidgetFieldEditor")

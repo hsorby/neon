@@ -16,6 +16,7 @@
 from PySide import QtGui
 
 from opencmiss.neon.ui.dialogs.ui_aboutdialog import Ui_AboutDialog
+from opencmiss.neon.settings.mainsettings import VERSION_STRING
 
 
 class AboutDialog(QtGui.QDialog):
@@ -25,3 +26,7 @@ class AboutDialog(QtGui.QDialog):
 
         self._ui = Ui_AboutDialog()
         self._ui.setupUi(self)
+
+        text = self._ui.labelTitle.text()
+        text = '{0} {1}'.format(text, VERSION_STRING)
+        self._ui.labelTitle.setText(text)
