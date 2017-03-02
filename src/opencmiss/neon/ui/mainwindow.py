@@ -404,7 +404,8 @@ class MainWindow(QtGui.QMainWindow):
             action_view.setActionGroup(action_group)
             action_view.triggered.connect(self._viewTriggered)
             self._ui.menu_View.addAction(action_view)
-            self._ui.toolBarView.addAction(action_view)
+            if v != self._visualisation_view:
+                self._ui.toolBarView.addAction(action_view)
 
         self._ui.menu_View.addSeparator()
 

@@ -25,7 +25,7 @@ class Biomeng321Lab1(BaseProblem):
 
     def __init__(self):
         super(Biomeng321Lab1, self).__init__()
-        self.setName('Biomeng321 Lab1')
+        self.setName('Kinematics analysis')
         self._boundary_condition = BOUNDARY_CONDITIONS[0]
 
     def setBoundaryCondition(self, boundary_condition):

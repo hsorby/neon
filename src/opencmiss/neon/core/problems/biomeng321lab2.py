@@ -17,19 +17,19 @@ import json
 
 from opencmiss.neon.core.problems.base import BaseProblem
 
-BOUNDARY_CONDITIONS = ['Model 1 (Equibiaxial extension of unit cube, 0 degree fibre rotation)',
-    'Model 2 (Equibiaxial extension of unit cube, 0 degree fibre rotation)',
-    'Model 3 (Equibiaxial extension of unit cube, 30 degree fibre rotation)',
-    'Model 4 (Equibiaxial extension of unit cube, 45 degree fibre rotation)',
-    'Model 5 (Equibiaxial extension of unit cube, 45 degree fibre rotation)',
-    'Model 6 (Equibiaxial extension of unit cube, 90 degree fibre rotation)']
+BOUNDARY_CONDITIONS = ['Model 1 (Equibiaxial extension of unit cube, 0 degree fibre orientation)',
+    'Model 2 (Equibiaxial extension of unit cube, 0 degree fibre orientation)',
+    'Model 3 (Equibiaxial extension of unit cube, 30 degree fibre orientation)',
+    'Model 4 (Equibiaxial extension of unit cube, 45 degree fibre orientation)',
+    'Model 5 (Equibiaxial extension of unit cube, 45 degree fibre orientation)',
+    'Model 6 (Equibiaxial extension of unit cube, 90 degree fibre orientation)']
 
 
 class Biomeng321Lab2(BaseProblem):
 
     def __init__(self):
         super(Biomeng321Lab2, self).__init__()
-        self.setName('Biomeng321 Lab2')
+        self.setName('Stress analysis')
         self._boundary_condition = BOUNDARY_CONDITIONS[0]
 
     def setBoundaryCondition(self, boundary_condition):

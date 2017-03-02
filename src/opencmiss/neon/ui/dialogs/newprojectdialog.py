@@ -47,7 +47,7 @@ class NewProjectDialog(QtGui.QDialog):
         self._ui.toolButtonRecent.clicked.connect(self._recentClicked)
         self._ui.listViewProjects.doubleClicked.connect(self._itemDoubleClicked)
         if BIOMENG321:
-            self._proxy_model.setFilterFixedString('Biomeng')
+            self._proxy_model.setFilterWildcard('*')
         else:
             self._ui.lineEditFilter.textChanged.connect(self._proxy_model.setFilterFixedString)
 

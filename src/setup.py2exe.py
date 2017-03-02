@@ -48,6 +48,11 @@ def which(name, flags=os.X_OK):
                 result.append(pext)
     return result
 
+# Add zinc to the path?
+import opencmiss.zinc.context
+location = os.path.dirname(opencmiss.zinc.context.__file__)
+sys.path.append(location)
+
 additional_dlls = []
 # Assuming that we are using the mkl libraries from intel
 mkl_core = which('mkl_core.dll')

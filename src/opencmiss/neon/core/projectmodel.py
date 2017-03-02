@@ -62,7 +62,7 @@ class ProjectModel(QtCore.QAbstractListModel):
         return None
 
     def getProject(self, index):
-        if not index.isValid():
+        if index is None or not index.isValid():
             return None
         return copy.deepcopy(self._projects[index.row()])
 
