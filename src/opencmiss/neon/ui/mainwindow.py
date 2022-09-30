@@ -16,6 +16,7 @@
 import os.path
 
 from PySide2 import QtCore, QtGui, QtWidgets
+from opencmiss.zincwidgets.consoleeditorwidget import ConsoleEditorWidget
 
 from opencmiss.neon.ui.dialogs.aboutdialog import AboutDialog
 from opencmiss.neon.ui.ui_mainwindow import Ui_MainWindow
@@ -115,6 +116,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetRegionEditor)
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetSceneviewerEditor)
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetFieldEditor)
+        self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetConsoleEditor)
         self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, self.dockWidgetLoggerEditor)
         self.tabifyDockWidget(self.dockWidgetLoggerEditor, self.dockWidgetTimeEditor)
 
@@ -192,6 +194,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.dockWidgetFieldEditor.setWidget(self.dockWidgetContentsFieldEditor)
         self.dockWidgetFieldEditor.setHidden(True)
 
+        self.dockWidgetConsoleEditor = QtWidgets.QDockWidget(self)
+        self.dockWidgetConsoleEditor.setWindowTitle('Interactive Console Editor')
+        self.dockWidgetConsoleEditor.setObjectName("dockWidgetConsoleEditor")
+        self.dockWidgetContentsConsoleEditor = ConsoleEditorWidget()
+        self.dockWidgetContentsConsoleEditor.setObjectName("dockWidgetContentsConsoleEditor")
+        self.dockWidgetConsoleEditor.setWidget(self.dockWidgetContentsConsoleEditor)
+        self.dockWidgetConsoleEditor.setHidden(True)
+
     def _registerEditors(self):
         self._registerEditor(self.dockWidgetRegionEditor)
         self._registerEditor(self.dockWidgetMaterialEditor)
@@ -202,6 +212,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._registerEditor(self.dockWidgetTessellationEditor)
         self._registerEditor(self.dockWidgetTimeEditor)
         self._registerEditor(self.dockWidgetFieldEditor)
+        self._registerEditor(self.dockWidgetConsoleEditor)
 
         self._ui.menu_View.addSeparator()
 
