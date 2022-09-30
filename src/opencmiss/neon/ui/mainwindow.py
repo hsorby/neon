@@ -455,6 +455,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.dockWidgetContentsMaterialEditor.setMaterials(document.getMaterials())
         self.dockWidgetContentsTessellationEditor.setTessellations(document.getTessellations())
         self.dockWidgetContentsTimeEditor.setZincContext(zincContext)
+        self.dockWidgetContentsConsoleEditor.setZincContext(zincContext)
         # self._snapshot_dialog.setZincContext(zincContext)
 
         model_sources_model = ModelSourcesModel(document, [])
