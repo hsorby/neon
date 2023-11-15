@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'aboutdialog.ui'
+## Form generated from reading UI file 'aboutdialog.view'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.2
 ##
