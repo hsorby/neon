@@ -26,6 +26,7 @@ from cmlibs.widgets.editabletabbar import EditableTabBar
 from cmlibs.widgets.fieldlisteditorwidget import FieldListEditorWidget
 from cmlibs.widgets.loggereditorwidget import LoggerEditorWidget
 from cmlibs.widgets.materialeditorwidget import MaterialEditorWidget
+from cmlibs.widgets.mesheditorwidget import MeshEditorWidget
 from cmlibs.widgets.modelsourceseditorwidget import ModelSourcesEditorWidget, ModelSourcesModel
 from cmlibs.widgets.regioneditorwidget import RegionEditorWidget
 from cmlibs.widgets.sceneeditorwidget import SceneEditorWidget
@@ -111,6 +112,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetTessellationEditor)
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetSpectrumEditor)
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetMaterialEditor)
+        self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetMeshEditor)
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetSceneEditor)
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetRegionEditor)
         self.tabifyDockWidget(self.dockWidgetModelSourcesEditor, self.dockWidgetSceneviewerEditor)
@@ -118,7 +120,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.addDockWidget(QtCore.Qt.DockWidgetArea.BottomDockWidgetArea, self.dockWidgetLoggerEditor)
         self.tabifyDockWidget(self.dockWidgetLoggerEditor, self.dockWidgetTimeEditor)
 
+    def _setup_editor(self, editor):
+        pass
+
     def _setup_editors(self):
+        self.dockWidgetModelSourcesEditor = QtWidgets.QDockWidget(self)
+        self.dockWidgetModelSourcesEditor.setWindowTitle('Model Sources Editor')
+        self.dockWidgetModelSourcesEditor.setObjectName("dockWidgetModelSourcesEditor")
+        self.dockWidgetContentsModelSourcesEditor = ModelSourcesEditorWidget()
+        self.dockWidgetContentsModelSourcesEditor.setObjectName("dockWidgetContentsModelSourcesEditor")
+        self.dockWidgetModelSourcesEditor.setWidget(self.dockWidgetContentsModelSourcesEditor)
+        self.dockWidgetModelSourcesEditor.setHidden(False)
+
         self.dockWidgetRegionEditor = QtWidgets.QDockWidget(self)
         self.dockWidgetRegionEditor.setWindowTitle('Region Editor')
         self.dockWidgetRegionEditor.setObjectName("dockWidgetRegionEditor")
@@ -135,13 +148,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.dockWidgetMaterialEditor.setWidget(self.dockWidgetContentsMaterialEditor)
         self.dockWidgetMaterialEditor.setHidden(True)
 
-        self.dockWidgetModelSourcesEditor = QtWidgets.QDockWidget(self)
-        self.dockWidgetModelSourcesEditor.setWindowTitle('Model Sources Editor')
-        self.dockWidgetModelSourcesEditor.setObjectName("dockWidgetModelSourcesEditor")
-        self.dockWidgetContentsModelSourcesEditor = ModelSourcesEditorWidget()
-        self.dockWidgetContentsModelSourcesEditor.setObjectName("dockWidgetContentsModelSourcesEditor")
-        self.dockWidgetModelSourcesEditor.setWidget(self.dockWidgetContentsModelSourcesEditor)
-        self.dockWidgetModelSourcesEditor.setHidden(False)
+        mesh_editor_widget = MeshEditorWidget()
+        self.dockWidgetMeshEditor = QtWidgets.QDockWidget(self)
+        self.dockWidgetMeshEditor.setWindowTitle(mesh_editor_widget.windowTitle())
+        self.dockWidgetMeshEditor.setObjectName(f"dockWidget{mesh_editor_widget.windowTitle().replace(' ', '')}")
+        self.dockWidgetContentsMeshEditor = mesh_editor_widget
+        self.dockWidgetContentsMeshEditor.setObjectName(f"dockWidgetContents{mesh_editor_widget.windowTitle().replace(' ', '')}")
+        self.dockWidgetMeshEditor.setWidget(self.dockWidgetContentsMeshEditor)
+        self.dockWidgetMeshEditor.setHidden(True)
 
         self.dockWidgetSceneEditor = QtWidgets.QDockWidget(self)
         self.dockWidgetSceneEditor.setWindowTitle('Scene Editor')
@@ -195,6 +209,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def _register_editors(self):
         self._register_editor(self.dockWidgetRegionEditor)
         self._register_editor(self.dockWidgetMaterialEditor)
+        self._register_editor(self.dockWidgetMeshEditor)
         self._register_editor(self.dockWidgetModelSourcesEditor)
         self._register_editor(self.dockWidgetSceneEditor)
         self._register_editor(self.dockWidgetSceneviewerEditor)
