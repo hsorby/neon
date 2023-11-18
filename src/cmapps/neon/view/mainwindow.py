@@ -317,7 +317,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _current_sceneviewer_changed(self):
         sceneviewer = self._ui.viewTabWidget.currentWidget().getActiveSceneviewer()
+        sceneviewer_widget = self._ui.viewTabWidget.currentWidget().getActiveSceneviewerWidget()
         self._editors["Sceneviewer Editor"].setSceneviewer(sceneviewer)
+        self._editors["Mesh Editor"].setSceneviewerWidget(sceneviewer_widget)
 
     def _views_changed(self, view_manager):
         views = view_manager.getViews()
@@ -382,6 +384,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _on_document_changed(self):
         document = self._model.getDocument()
+        self._model.setCurrentUndoRedoIndex(1)
         rootRegion = document.getRootRegion()
         zincRootRegion = rootRegion.getZincRegion()
 
@@ -450,7 +453,7 @@ class MainWindow(QtWidgets.QMainWindow):
             for r in range(rows):
                 for c in range(columns):
                     sceneviewer_widget = tab_layout.itemAtPosition(r, c).widget()
-                    view.updateSceneviewer(r, c, sceneviewer_widget.getSceneviewer())
+                    view.updateSceneviewer(r, c, sceneviewer_widget.get_zinc_sceneviewer())
 
     def _undo_redo_stack_index_changed(self, index):
         self._model.setCurrentUndoRedoIndex(index)
