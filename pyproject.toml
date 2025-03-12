@@ -30,4 +30,10 @@ classifiers = [
 Homepage = "https://cmlibs.org"
 Repository = "https://github.com/CMLibs/cmapps.neon"
 
+[project.scripts]
+neon = "cmapps.neon.neon:main"
+
+[project.gui-scripts]
+neon-gui = "cmapps.neon.neon:main"
+
 [tool.setuptools_scm]
