@@ -31,7 +31,7 @@ class MainApplication(QtCore.QObject):
     def __init__(self):
         super(MainApplication, self).__init__()
         self._saveUndoRedoIndex = 0
-        self._currentUntoRedoIndex = 0
+        self._currentUndoRedoIndex = 0
 
         self._location = None
         self._recents = []
@@ -51,10 +51,10 @@ class MainApplication(QtCore.QObject):
         return None
 
     def isModified(self):
-        return self._saveUndoRedoIndex != self._currentUntoRedoIndex
+        return self._saveUndoRedoIndex != self._currentUndoRedoIndex
 
     def setCurrentUndoRedoIndex(self, index):
-        self._currentUntoRedoIndex = index
+        self._currentUndoRedoIndex = index
 
     def setSaveUndoRedoIndex(self, index):
         self._saveUndoRedoIndex = index

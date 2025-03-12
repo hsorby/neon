@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainwindow.ui'
+## Form generated from reading UI file 'mainwindow.view'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.2
 ##
@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
     QMenuBar, QSizePolicy, QStatusBar, QTabWidget,
     QToolBar, QWidget)
 
-from cmapps.neon.ui import icons_rc
+from cmapps.neon.view import icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
