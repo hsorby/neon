@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools_scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools-git-versioning]
+enabled = true
+
+[project]
+name = "cmapps.neon"
+dynamic = ["version"]
+keywords = ["CMLibs", "Zinc", "Visualisation", "Finite Element"]
+readme = "README.rst"
+license = {file = "LICENSE"}
+authors = [
+    { name="Hugh Sorby", email="h.sorby@auckland.ac.nz" },
+]
+dependencies = [
+    "cmlibs.utils", "PySide6", "cmlibs.zinc", "cmlibs.widgets", "cmlibs.argon"
+]
+description = "A visualisation application for finite element models described with (nominally) cubic-Hermite elements."
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+
+[project.urls]
+Homepage = "https://cmlibs.org"
+Repository = "https://github.com/CMLibs/cmapps.neon"
+
+[tool.setuptools_scm]

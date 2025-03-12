@@ -1,1 +1,3 @@
-__version__ = "4.0.0a1"
+import importlib.metadata
+
+__version__ = importlib.metadata.version("cmapps.neon")

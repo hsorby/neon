@@ -6,9 +6,9 @@ on:
       - 'v*'
 
 jobs:
-  create_release:
+  create-release:
     name: create_release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Determine release properties
         shell: bash
@@ -34,4 +34,15 @@ jobs:
           draft: false
           prerelease: ${{ steps.release_properties.outputs.pre_release }}
           body: ${{ steps.release_properties.outputs.body }}
-
+  release-package-to-pypi:
+    if: github.repository == 'cmlibs-python/cmapps.neon'
+    runs-on: ubuntu-24.04
+    name: Release package
+    permissions:
+      contents: write
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    steps:
+      - name: Release Python package
+        uses: hsorby/release-python-package-action@v1
+        with:
+          pypi-package-name: cmapps.neon
